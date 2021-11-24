@@ -26,6 +26,7 @@ const GPS = () => {
             borderColor="primary.600"
             rounded="3xl"
             onClick={() => setGPS(true)}
+            _hover={{ bg: 'rgba(238, 234, 249, 0.5)' }}
           >
             開啟定位功能
           </Button>

@@ -72,10 +72,10 @@ const theme = extendTheme({
           bg: 'gray.200',
         },
       },
-      _focus: {
-        borderColor: '#7550CC !important',
-        boxShadow: '0 0 0 1px #7550CC !important',
-      },
+      // _focus: {
+      //   borderColor: '#7550CC !important',
+      //   boxShadow: '0 0 0 1px #7550CC !important',
+      // },
     },
   },
   fonts,

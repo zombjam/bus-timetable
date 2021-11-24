@@ -16,12 +16,12 @@ const MobileMenu = () => {
 
   return (
     <>
-      <Box position="fixed" zIndex="999" right="0" onClick={setIsOpen.toggle}>
+      <Box position="fixed" zIndex="2000" right="0" onClick={setIsOpen.toggle}>
         {isOpen && <Box boxSize="64px" alt="menu" {...IconStyles} bgImage={headMenuOpenImg} />}
         {!isOpen && <Box boxSize="64px" alt="menu-close" {...IconStyles} bgImage={headMenuCloseImg} />}
       </Box>
       {isOpen && (
-        <Box position="absolute" top="0" left="0" zIndex="900" w="full" h="full" textAlign="right" bgColor="rgba(0,0,0, 0.3)">
+        <Box position="absolute" top="0" left="0" zIndex="1999" w="full" h="full" textAlign="right" bgColor="rgba(0,0,0, 0.3)">
           <Box
             display="inline-block"
             position="relative"

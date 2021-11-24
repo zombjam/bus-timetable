@@ -6,7 +6,6 @@ import Nearby from './Nearby';
 import Search from './Search';
 import Recommend from './Recommend';
 import Detail from './Detail';
-// https://wmts.nlsc.gov.tw/wmts/EMAP/default/GoogleMapsCompatible/{z}/{y}/{x}
 
 function App() {
   return (

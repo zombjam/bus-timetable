@@ -14,7 +14,17 @@ const Search = () => {
         </Box>
         <Box mt={3}>
           <InputGroup size="lg" shadow="base">
-            <Input h={14} bg="white" border="0" rounded="base" placeholder="請輸入公車路線 / 起迄站名" />
+            <Input
+              h={14}
+              bg="white"
+              border="0"
+              rounded="base"
+              placeholder="請輸入公車路線 / 起迄站名"
+              _focus={{
+                borderColor: 'primary.600',
+                boxShadow: '0 0 0 1px #7550CC',
+              }}
+            />
             <InputRightElement my={1} children={<Icon name="search" size={6} />} />
           </InputGroup>
 
