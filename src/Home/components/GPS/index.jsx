@@ -21,9 +21,9 @@ const GPS = () => {
             w="full"
             h="50px"
             variant="outline"
-            color="primary.default"
+            color="primary.600"
             border="1px"
-            borderColor="primary.default"
+            borderColor="primary.600"
             rounded="3xl"
             onClick={() => setGPS(true)}
           >

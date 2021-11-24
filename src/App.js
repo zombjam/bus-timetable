@@ -3,8 +3,9 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import Home from './Home';
 import Nearby from './Nearby';
-import Search from 'Search';
-import Recommend from 'Recommend';
+import Search from './Search';
+import Recommend from './Recommend';
+import Detail from './Detail';
 // https://wmts.nlsc.gov.tw/wmts/EMAP/default/GoogleMapsCompatible/{z}/{y}/{x}
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/nearby" element={<Nearby />}></Route>
         <Route exact path="/search" element={<Search />}></Route>
         <Route exact path="/recommend" element={<Recommend />}></Route>
+        <Route exact path="/detail" element={<Detail />}></Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </HashRouter>

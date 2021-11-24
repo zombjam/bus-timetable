@@ -16,7 +16,7 @@ const MobileMenu = () => {
 
   return (
     <>
-      <Box position="absolute" zIndex="999" right="0" onClick={setIsOpen.toggle}>
+      <Box position="fixed" zIndex="999" right="0" onClick={setIsOpen.toggle}>
         {isOpen && <Box boxSize="64px" alt="menu" {...IconStyles} bgImage={headMenuOpenImg} />}
         {!isOpen && <Box boxSize="64px" alt="menu-close" {...IconStyles} bgImage={headMenuCloseImg} />}
       </Box>
@@ -47,7 +47,7 @@ const MobileMenu = () => {
               ></Box>
             </AspectRatio>
             <VStack mt={10} alignItems="flex-end" maxH="80%" position="relative" zIndex="10">
-              {MobileMenus.map((menu) => (
+              {MobileMenus.map(menu => (
                 <Link
                   fontSize="xl"
                   h="52px"

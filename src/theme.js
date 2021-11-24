@@ -9,7 +9,7 @@ const colors = {
     200: '#EEEAF9',
     300: '#C6B7EA',
     400: '#9D83DB',
-    default: '#7550CC',
+    600: '#7550CC',
     700: '#37206D',
     800: '#0D081A',
   },
@@ -23,6 +23,8 @@ const colors = {
     700: '#545963',
     800: '#36393F',
     900: '#1F1F1F',
+    bg: '#F3F3F3',
+    bgDeep: '#E5E5E5',
   },
   secondary: {
     pink: '#FFCCAC',
@@ -67,8 +69,12 @@ const theme = extendTheme({
         h: 'full',
         bg: 'gray.200',
         '> div': {
-          bg: '#E5E5E5',
+          bg: 'gray.200',
         },
+      },
+      _focus: {
+        borderColor: '#7550CC !important',
+        boxShadow: '0 0 0 1px #7550CC !important',
       },
     },
   },
