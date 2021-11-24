@@ -1,5 +1,4 @@
 import { extendTheme } from '@chakra-ui/react';
-import styles from './assets/scss/style.scss';
 
 const fonts = {
   body: '"Noto Sans TC", "system-ui", sans-serif',
@@ -53,15 +52,23 @@ const shadows = {
 
 const theme = extendTheme({
   styles: {
-    ...styles,
     global: {
+      html: {
+        w: 'full',
+        h: 'full',
+      },
       body: {
         w: 'full',
         h: 'full',
         color: 'primary.800',
       },
       '#root': {
+        w: 'full',
+        h: 'full',
         bg: 'gray.200',
+        '> div': {
+          bg: '#E5E5E5',
+        },
       },
     },
   },
