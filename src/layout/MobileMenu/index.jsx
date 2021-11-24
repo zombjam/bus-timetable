@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, AspectRatio, Link, VStack, Text } from '@chakra-ui/react';
+import React from 'react';
+import { Box, AspectRatio, Link, VStack, Text, useBoolean } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 import { MobileMenus } from '../../constant/menu';
 import headMenuCloseImg from '../../assets/images/HeadMenu_mobile.svg';
@@ -12,11 +12,11 @@ const IconStyles = {
 };
 
 const MobileMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useBoolean();
 
   return (
     <>
-      <Box position="absolute" zIndex="999" right="0" onClick={() => setIsOpen(!isOpen)}>
+      <Box position="absolute" zIndex="999" right="0" onClick={setIsOpen.toggle}>
         {isOpen && <Box boxSize="64px" alt="menu" {...IconStyles} bgImage={headMenuOpenImg} />}
         {!isOpen && <Box boxSize="64px" alt="menu-close" {...IconStyles} bgImage={headMenuCloseImg} />}
       </Box>
@@ -59,7 +59,7 @@ const MobileMenu = () => {
                   to={menu.path}
                   letterSpacing="1px"
                   _hover={{ textDecoration: 'none' }}
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={setIsOpen.toggle}
                 >
                   {menu.name}
                 </Link>
