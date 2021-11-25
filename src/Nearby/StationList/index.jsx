@@ -1,5 +1,6 @@
-import React from 'react';
-import { Box, Button, Text, VStack, HStack, Tag } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { useIsMobile, useIsDesktop } from '../../hooks';
+import { Box, Button, Text, VStack, HStack, Tag, Slide } from '@chakra-ui/react';
 
 const StationCard = () => {
   return (
@@ -19,43 +20,66 @@ const StationCard = () => {
 };
 
 const StationList = () => {
+  const isMobile = useIsMobile();
+  const isDesktop = useIsDesktop();
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setIsOpen(false);
+    }
+  }, [isMobile]);
+
   return (
-    <Box
-      position="absolute"
-      zIndex="1550"
-      top="76%"
-      w="full"
-      h="full"
-      rounded="12px 12px 0 0"
-      bg="white"
-      border="1px"
-      borderColor="gray.300"
+    <Slide
+      direction="bottom"
+      in={isOpen}
+      style={{
+        bottom: !isOpen ? (isMobile ? '163px' : '80%') : 0,
+        zIndex: 1550,
+        width: isMobile ? 'auto' : isDesktop ? '25%' : '33.3333333%',
+        height: isMobile ? 'auto' : '80%',
+        display: 'inline-block',
+        maxWidth: 'max-content',
+      }}
     >
       <Button
         w="full"
         alignItems="flex-start"
         pt={2}
         h="27px"
+        rounded="12px 12px 0 0"
+        display={{ base: 'block', md: 'none' }}
         sx={{
           '&:before': {
             content: '""',
+            display: 'block',
+            m: '0 auto',
             w: '40px',
             h: '2px',
             bg: 'gray.400',
           },
         }}
+        _hover={{}}
+        onClick={() => setIsOpen(!isOpen)}
       />
-      <Box px={4}>
-        <Text color="gray.500" mb={3}>
+      <Box pt={{ md: 8 }} bg="white" rounded={{ md: '0 60px 0 0' }} overflow="hidden" h={{ md: 'full' }}>
+        <Text color="gray.500" px={{ base: 5, md: 6 }} mb={3}>
           附近站牌
         </Text>
-        <VStack spacing={3}>
-          {[1, 2, 3].map(i => (
+        <VStack
+          h={isMobile ? (isOpen ? 'calc(100vh - 120px)' : '100px') : '100%'}
+          px={{ base: 5, md: 6 }}
+          spacing={3}
+          overflow="auto"
+          pb={{ base: 8, md: 16 }}
+        >
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
             <StationCard key={i}></StationCard>
           ))}
         </VStack>
       </Box>
-    </Box>
+    </Slide>
   );
 };
 

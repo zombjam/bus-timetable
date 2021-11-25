@@ -21,7 +21,7 @@ const PositionButton = () => {
   };
 
   return (
-    <Box position="absolute" zIndex="1500" size={12} right={3} top="calc(76% - 56px)">
+    <Box position="absolute" zIndex="1010" boxSize={12} right={{ base: 3, md: 5 }} bottom={{ base: '180px', md: '60px' }}>
       <Tooltip label="點擊定位" hasArrow bg="primary.600" color="white" mt={1}>
         <IconButton
           arial-label="點擊定位"
@@ -37,7 +37,6 @@ const PositionButton = () => {
           onClick={getLocation}
         />
       </Tooltip>
-      {/* <Modal isOpen={modal.isOpen} content={modal.content} /> */}
     </Box>
   );
 };

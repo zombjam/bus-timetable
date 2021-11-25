@@ -6,32 +6,16 @@ import StationList from './StationList';
 
 const Nearby = () => {
   return (
-    <Box display="flex" flexDirection="column" minH="full" position="relative" h="full">
+    <Box display="flex" flexDirection="column" minH="full" position="relative" h="full" overflow="hidden">
       <MenuBar />
       <SearchBar />
       <PositionButton />
-      <Box
-        position={{ md: 'absolute' }}
-        bottom={{ md: '0' }}
-        borderRadius={{ md: '0 60px 0 0 ' }}
-        zIndex={{ md: 2000 }}
-        w={{ base: 'full', md: 'max-content' }}
-        bg={{ md: 'gray.bg' }}
-        shadow={{ md: 'base' }}
-        maxH={{ md: '80%' }}
-        overflow="hidden"
-        display="flex"
-        flexDirection="column"
-      >
-        <StationList />
-      </Box>
+      <StationList />
 
       <Desktop>
         <Footer />
       </Desktop>
-      <Desktop flex="1">
-        <Map />
-      </Desktop>
+      <Map />
     </Box>
   );
 };

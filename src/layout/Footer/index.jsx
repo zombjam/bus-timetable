@@ -1,13 +1,14 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
 
-const Footer = () => {
+const Footer = ({ position }) => {
   return (
     <Box
-      position="absolute"
+      position={position || 'absolute'}
       bottom="0"
-      left={{ base: 0, md: '354px' }}
-      w={{ base: 'full', md: 'calc(100% - 354px)' }}
+      left={{ base: 0, md: 'initial' }}
+      right={{ md: 0 }}
+      w={{ base: 'full', md: 2 / 3, lg: 3 / 4 }}
       fontSize="12px"
       textAlign={{ base: 'center', md: 'right' }}
       pr={{ md: 8 }}
@@ -15,7 +16,7 @@ const Footer = () => {
       bg="primary.700"
       color="white"
       borderRadius="60px 0 0 0"
-      zIndex="2000"
+      zIndex="1001"
     >
       #The F2E 3rd Week3 #Design by breakfast
     </Box>

@@ -63,14 +63,15 @@ const theme = extendTheme({
         w: 'full',
         h: 'full',
         color: 'primary.800',
+        bg: 'transparent',
       },
       '#root': {
         w: 'full',
         h: 'full',
         bg: 'gray.200',
-        '> div': {
-          bg: 'gray.200',
-        },
+        // '> div': {
+        //   bg: 'gray.200',
+        // },
       },
       // _focus: {
       //   borderColor: '#7550CC !important',

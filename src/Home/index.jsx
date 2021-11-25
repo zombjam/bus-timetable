@@ -1,19 +1,29 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
-import Header from '../layout/Header';
-import Footer from '../layout/Footer';
+import { Desktop, Header } from '../layout';
+import { Map } from '../components';
 import Nav from './components/Nav';
 import GPS from './components/GPS';
 
 const Home = () => {
   return (
-    <Box display="flex" flexDirection="column" minH="full" position="relative">
+    <Box
+      display="flex"
+      flexDirection="column"
+      minH="full"
+      position="relative"
+      pt={{ base: 20, md: 0 }}
+      h="full"
+      overflow={{ md: 'hidden' }}
+    >
       <Header />
-      <Box flex="1" display="flex" flexDirection="column">
+      <Box display="flex" flexDirection="column" flex={{ base: '1', md: 'initial' }}>
         <Nav />
         <GPS />
       </Box>
-      <Footer />
+      <Desktop flex="1">
+        <Map zoom={8} center={[23.58, 120.58]} />
+      </Desktop>
     </Box>
   );
 };

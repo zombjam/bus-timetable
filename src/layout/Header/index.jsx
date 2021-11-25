@@ -11,13 +11,17 @@ const Header = () => {
     <Box
       display="flex"
       alignItems="center"
-      borderRadius={{ base: '0 0 0 60px', md: '0 0 0 45px' }}
       px={4}
-      pt={{ base: 0.5, md: '7px' }}
+      pt={{ base: 0.5, md: 2 }}
       pb={3}
       pr={{ md: 16 }}
       bg="gradient.deep"
-      position="relative"
+      position="fixed"
+      top="0"
+      w="full"
+      overflow="hidden"
+      borderRadius={{ base: '0 0 0 60px', md: '0 0 0 45px' }}
+      zIndex={2000}
     >
       <AspectRatio maxW={{ base: 20, md: '60px' }} ratio={1} flex="1">
         <Link as={ReactLink} to="/" _hover={{ textDecoration: 'none' }}>
@@ -44,7 +48,7 @@ const Header = () => {
       </Box>
 
       <HStack display={{ base: 'none', md: 'flex' }} spacing={4}>
-        {HomeNavMenus.map((menu) => (
+        {HomeNavMenus.map(menu => (
           <Link
             as={ReactLink}
             to={menu.path}

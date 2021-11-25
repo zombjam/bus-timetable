@@ -13,7 +13,7 @@ const Search = () => {
         bottom={{ md: '0' }}
         borderRadius={{ md: '0 60px 0 0 ' }}
         zIndex={{ md: 2000 }}
-        w={{ base: 'full', md: 'max-content' }}
+        w={{ base: 'full', md: 1 / 3, lg: 1 / 4 }}
         bg={{ md: 'gray.bg' }}
         shadow={{ md: 'base' }}
         maxH={{ md: '80%' }}
