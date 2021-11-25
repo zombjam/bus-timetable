@@ -38,7 +38,7 @@ const Search = () => {
                   boxShadow: '0 0 0 1px #7550CC',
                 }}
               />
-              <InputRightElement my={1} children={<Icon name="search" size={6} />} />
+              <InputRightElement my={1} children={<Icon name="search" cursor="pointer" size={6} />} />
             </InputGroup>
 
             <Box color="gray.600" fontSize="sm" pt={6} pb={4}>
