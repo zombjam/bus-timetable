@@ -23,6 +23,8 @@ const StationList = () => {
   const isMobile = useIsMobile();
   const isDesktop = useIsDesktop();
   const [isOpen, setIsOpen] = useState(false);
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 
   useEffect(() => {
     if (!isMobile) {
@@ -68,11 +70,13 @@ const StationList = () => {
           附近站牌
         </Text>
         <VStack
-          h={isMobile ? (isOpen ? 'calc(100vh - 120px)' : '100px') : '100%'}
           px={{ base: 5, md: 6 }}
           spacing={3}
           overflow="auto"
           pb={{ base: 8, md: 16 }}
+          sx={{
+            height: isMobile ? (isOpen ? `calc(var(--vh, 1vh) * 88)` : '100px') : '100%',
+          }}
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
             <StationCard key={i}></StationCard>
