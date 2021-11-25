@@ -6,13 +6,16 @@ const Footer = () => {
     <Box
       position="absolute"
       bottom="0"
-      w="full"
+      left={{ base: 0, md: '354px' }}
+      w={{ base: 'full', md: 'calc(100% - 354px)' }}
       fontSize="12px"
-      textAlign="center"
+      textAlign={{ base: 'center', md: 'right' }}
+      pr={{ md: 8 }}
       py={3}
       bg="primary.700"
       color="white"
       borderRadius="60px 0 0 0"
+      zIndex="2000"
     >
       #The F2E 3rd Week3 #Design by breakfast
     </Box>
