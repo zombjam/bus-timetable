@@ -88,7 +88,7 @@ const GPS = () => {
             flex="1"
             borderRadius="0 60px 0 0"
             pt={6}
-            pb={4}
+            pb={{ base: 4, md: 12 }}
             bg={{ base: 'white', md: 'gray.200' }}
             shadow="base"
             position={{ md: 'absolute' }}

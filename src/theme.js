@@ -58,12 +58,16 @@ const theme = extendTheme({
       html: {
         w: 'full',
         h: 'full',
+        overscrollBehaviorY: 'none',
+        overflow: 'hidden',
       },
       body: {
         w: 'full',
         h: 'full',
         color: 'primary.800',
         bg: 'transparent',
+        overscrollBehaviorY: 'none',
+        overflow: 'hidden',
       },
       '#root': {
         w: 'full',
@@ -72,6 +76,12 @@ const theme = extendTheme({
         // '> div': {
         //   bg: 'gray.200',
         // },
+      },
+      '.overflow-initial': {
+        overflow: 'initial',
+        body: {
+          overflow: 'initial',
+        },
       },
       // _focus: {
       //   borderColor: '#7550CC !important',

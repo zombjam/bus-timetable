@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import { Desktop, Header } from '../layout';
 import { Map } from '../components';
@@ -6,6 +6,14 @@ import Nav from './components/Nav';
 import GPS from './components/GPS';
 
 const Home = () => {
+  document.documentElement.classList.add('overflow-initial');
+
+  useEffect(() => {
+    return () => {
+      document.documentElement.classList.remove('overflow-initial');
+    };
+  }, []);
+
   return (
     <Box
       display="flex"

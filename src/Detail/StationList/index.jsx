@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Text, VStack, HStack, Slide, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { Box, Button, Text, HStack, Slide, Tabs } from '@chakra-ui/react';
 import { useSwipeable } from 'react-swipeable';
 import { useIsMobile, useIsDesktop } from '../../hooks';
 import { PositionButton, Icon } from '../../components';
-
-const StationCard = ({ children }) => {
-  return (
-    <TabPanel w="full" px={3} py={2}>
-      <HStack spacing={2} mb={1}>
-        Hello
-      </HStack>
-    </TabPanel>
-  );
-};
+import StationTab from '../StationTab';
 
 const ListStatus = {
   default: 'default',
@@ -28,7 +19,7 @@ const StationList = () => {
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 
-  const handleSwipedUp = (eventData) => {
+  const handleSwipedUp = eventData => {
     if (listStatus === ListStatus.open) return;
     setPrevStatus(listStatus);
     setTimeout(() => {
@@ -37,10 +28,10 @@ const StationList = () => {
       } else if (listStatus === 'close') {
         setListStatus(ListStatus.default);
       }
-    }, 10);
+    }, 50);
   };
 
-  const handleSwipedDown = (eventData) => {
+  const handleSwipedDown = eventData => {
     if (listStatus === ListStatus.close) return;
     setPrevStatus(listStatus);
     setTimeout(() => {
@@ -49,13 +40,12 @@ const StationList = () => {
       } else if (listStatus === 'default') {
         setListStatus(ListStatus.close);
       }
-    }, 10);
+    }, 50);
   };
 
   const handlers = useSwipeable({
     onSwipedUp: handleSwipedUp,
     onSwipedDown: handleSwipedDown,
-    trackMouse: true,
   });
 
   useEffect(() => {
@@ -66,13 +56,13 @@ const StationList = () => {
 
   const handleListHeight = () => {
     if (!isMobile) {
-      return '100%';
+      return 'calc(100% - 4rem)';
     }
     if (listStatus === ListStatus.close) {
       return '100px';
     }
     if (listStatus === ListStatus.open) {
-      return `calc(var(--vh, 1vh) * 88)`;
+      return `calc(var(--vh, 1vh) * 80)`;
     }
     return `calc(var(--vh, 1vh) * 50)`;
   };
@@ -88,6 +78,7 @@ const StationList = () => {
         width: isMobile ? '100%' : isDesktop ? '25%' : '33.3333333%',
         height: isMobile ? 'auto' : '80%',
         display: 'inline-block',
+        touchAction: 'pan-y',
       }}
     >
       {isMobile && listStatus !== ListStatus.open && <PositionButton top={{ base: -16 }} bottom={{}} />}
@@ -125,31 +116,23 @@ const StationList = () => {
             </Text>
             <Icon name="Refresh" />
           </HStack>
-          <HStack justifyContent="space-between">
-            <Text color="gray.800" fontSize="lg">
+          <HStack justifyContent="space-between" alignItems="flex-start">
+            <Text color="gray.800" fontSize="2xl" fontWeight="500">
+              {/* E25高旗六龜快線(08:20前不行經高鐵左營站) */}
               100百貨幹線
             </Text>
             <Icon name="moreInfo" boxSize={6} />
           </HStack>
         </Box>
         <Tabs
-          px={{ base: 5, md: 6 }}
+          px={3}
+          pb={12}
           colorScheme="primary"
           sx={{
             height: handleListHeight(),
           }}
         >
-          <TabList>
-            <Tab>One</Tab>
-            <Tab>Two</Tab>
-          </TabList>
-
-          <TabPanels>
-            {/* <StationCard></StationCard>
-            <StationCard></StationCard> */}
-            <TabPanel>One !</TabPanel>
-            <TabPanel>Two !</TabPanel>
-          </TabPanels>
+          <StationTab />
         </Tabs>
       </Box>
     </Slide>
