@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Text, VStack, HStack, Slide } from '@chakra-ui/react';
+import { Box, Button, Text, VStack, HStack, Slide, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { useSwipeable } from 'react-swipeable';
 import { useIsMobile, useIsDesktop } from '../../hooks';
-import { PositionButton } from '../../components';
+import { PositionButton, Icon } from '../../components';
 
-const StationCard = () => {
+const StationCard = ({ children }) => {
   return (
-    <Box w="full" px={3} py={2}>
-      <HStack spacing={2} mb={1}></HStack>
-    </Box>
+    <TabPanel w="full" px={3} py={2}>
+      <HStack spacing={2} mb={1}>
+        Hello
+      </HStack>
+    </TabPanel>
   );
 };
 
@@ -116,22 +118,39 @@ const StationList = () => {
         _hover={{}}
       />
       <Box pt={{ md: 8 }} bg="white" rounded={{ md: '0 60px 0 0' }} overflow="hidden" h={{ md: 'full' }}>
-        <Text color="gray.500" px={{ base: 5, md: 6 }} mb={3}>
-          附近站牌
-        </Text>
-        <VStack
+        <Box px={{ base: 5, md: 6 }}>
+          <HStack mb={1} spacing={2}>
+            <Text fontSize="xs" color="gray.700">
+              10秒後更新
+            </Text>
+            <Icon name="Refresh" />
+          </HStack>
+          <HStack justifyContent="space-between">
+            <Text color="gray.800" fontSize="lg">
+              100百貨幹線
+            </Text>
+            <Icon name="moreInfo" boxSize={6} />
+          </HStack>
+        </Box>
+        <Tabs
           px={{ base: 5, md: 6 }}
-          spacing={3}
-          overflow="auto"
-          pb={{ base: 8, md: 16 }}
+          colorScheme="primary"
           sx={{
             height: handleListHeight(),
           }}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-            <StationCard key={i}></StationCard>
-          ))}
-        </VStack>
+          <TabList>
+            <Tab>One</Tab>
+            <Tab>Two</Tab>
+          </TabList>
+
+          <TabPanels>
+            {/* <StationCard></StationCard>
+            <StationCard></StationCard> */}
+            <TabPanel>One !</TabPanel>
+            <TabPanel>Two !</TabPanel>
+          </TabPanels>
+        </Tabs>
       </Box>
     </Slide>
   );
