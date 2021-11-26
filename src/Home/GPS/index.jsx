@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 import { Box, VStack, Text, Button, HStack, Tag, List, ListItem, Link, Divider } from '@chakra-ui/react';
-import { Footer } from '../../../layout';
-import { useIsMobile } from '../../../hooks';
-import { Icon } from '../../../components';
+import { Footer } from '../../layout';
+import { useIsMobile } from '../../hooks';
+import { Icon } from '../../components';
 
 const BusRoute = () => {
   return (

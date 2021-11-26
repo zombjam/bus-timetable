@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import { Desktop, Header } from '../layout';
 import { Map } from '../components';
-import Nav from './components/Nav';
-import GPS from './components/GPS';
+import Nav from './Nav';
+import GPS from './GPS';
 
 const Home = () => {
   document.documentElement.classList.add('overflow-initial');

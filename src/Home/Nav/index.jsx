@@ -2,7 +2,7 @@ import React from 'react';
 import { HStack, VStack, Img, Heading, Text, Link } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
 
-import { HomeNavMenus } from '../../../constant/menu';
+import { HomeNavMenus } from '../../constant/menu';
 
 const Nav = () => {
   return (
