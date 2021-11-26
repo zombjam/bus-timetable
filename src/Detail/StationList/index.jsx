@@ -1,38 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Text, VStack, HStack, Tag, Slide } from '@chakra-ui/react';
+import { Box, Button, Text, VStack, HStack, Slide } from '@chakra-ui/react';
 import { useSwipeable } from 'react-swipeable';
 import { useIsMobile, useIsDesktop } from '../../hooks';
+import { PositionButton } from '../../components';
 
 const StationCard = () => {
   return (
-    <Box px={3} py={2} border="1px" borderColor="primary.300" rounded="md">
-      <HStack spacing={2} mb={1}>
-        <Text fontWeight="700">捷運美麗島站</Text>
-        <Tag color="white" bg="gray.500" fontSize="xs" rounded="2xl">
-          北行
-        </Tag>
-      </HStack>
-      <Text color="primary.700" fontSize="sm">
-        100百貨幹線、12A、12C(延駛經大坪頂)、12B(去程不繞駛飛機路)、218A、218B、224(原
-        24B)、52A、69A小港幹線、69B小港幹線(延駛明鳳)、72A、72B(延駛正勤社區)、8001
-      </Text>
+    <Box w="full" px={3} py={2}>
+      <HStack spacing={2} mb={1}></HStack>
     </Box>
   );
+};
+
+const ListStatus = {
+  default: 'default',
+  open: 'open',
+  close: 'close',
 };
 
 const StationList = () => {
   const isMobile = useIsMobile();
   const isDesktop = useIsDesktop();
-  const [isOpen, setIsOpen] = useState(false);
+  const [listStatus, setListStatus] = useState(ListStatus.default);
+  const [prevStatus, setPrevStatus] = useState();
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 
   const handleSwipedUp = (eventData) => {
-    setIsOpen(true);
+    if (listStatus === ListStatus.open) return;
+    setPrevStatus(listStatus);
+    setTimeout(() => {
+      if (listStatus === 'default') {
+        setListStatus(ListStatus.open);
+      } else if (listStatus === 'close') {
+        setListStatus(ListStatus.default);
+      }
+    }, 10);
   };
 
   const handleSwipedDown = (eventData) => {
-    setIsOpen(false);
+    if (listStatus === ListStatus.close) return;
+    setPrevStatus(listStatus);
+    setTimeout(() => {
+      if (listStatus === 'open') {
+        setListStatus(ListStatus.default);
+      } else if (listStatus === 'default') {
+        setListStatus(ListStatus.close);
+      }
+    }, 10);
   };
 
   const handlers = useSwipeable({
@@ -43,23 +58,37 @@ const StationList = () => {
 
   useEffect(() => {
     if (!isMobile) {
-      setIsOpen(false);
+      setListStatus('default');
     }
   }, [isMobile]);
+
+  const handleListHeight = () => {
+    if (!isMobile) {
+      return '100%';
+    }
+    if (listStatus === ListStatus.close) {
+      return '100px';
+    }
+    if (listStatus === ListStatus.open) {
+      return `calc(var(--vh, 1vh) * 88)`;
+    }
+    return `calc(var(--vh, 1vh) * 50)`;
+  };
 
   return (
     <Slide
       direction="bottom"
-      in={isOpen}
+      in={prevStatus !== listStatus}
+      unmountOnExit={true}
       style={{
-        bottom: !isOpen ? (isMobile ? '163px' : '80%') : 0,
+        bottom: 0,
         zIndex: 1550,
-        width: isMobile ? 'auto' : isDesktop ? '25%' : '33.3333333%',
+        width: isMobile ? '100%' : isDesktop ? '25%' : '33.3333333%',
         height: isMobile ? 'auto' : '80%',
         display: 'inline-block',
-        maxWidth: 'max-content',
       }}
     >
+      {isMobile && listStatus !== ListStatus.open && <PositionButton top={{ base: -16 }} bottom={{}} />}
       <Button
         {...handlers}
         w="full"
@@ -96,7 +125,7 @@ const StationList = () => {
           overflow="auto"
           pb={{ base: 8, md: 16 }}
           sx={{
-            height: isMobile ? (isOpen ? `calc(var(--vh, 1vh) * 88)` : '100px') : '100%',
+            height: handleListHeight(),
           }}
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (

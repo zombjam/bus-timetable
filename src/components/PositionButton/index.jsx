@@ -2,7 +2,11 @@ import React from 'react';
 import { IconButton, Tooltip, Box } from '@chakra-ui/react';
 import Icon from '../Icon';
 
-const PositionButton = () => {
+/**
+ *
+ * @param bottom = { base: 5, md: 10 }
+ */
+const PositionButton = ({ top, bottom }) => {
   const getLocation = () => {
     if (!navigator.geolocation) {
       // toggleModal(true, '您的瀏覽器不支援地理定位功能');
@@ -10,7 +14,7 @@ const PositionButton = () => {
     }
     // toggleModal(true, '定位中...');
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         // toggleModal(false, null);
         // setPosition([position.coords.latitude, position.coords.longitude]);
       },
@@ -21,7 +25,14 @@ const PositionButton = () => {
   };
 
   return (
-    <Box position="absolute" zIndex="1010" boxSize={12} right={{ base: 3, md: 5 }} bottom={{ base: '180px', md: '60px' }}>
+    <Box
+      position="absolute"
+      zIndex="1010"
+      boxSize={12}
+      right={{ base: 3, md: 5 }}
+      top={top}
+      bottom={bottom || { base: '180px', md: '60px' }}
+    >
       <Tooltip label="點擊定位" hasArrow bg="primary.600" color="white" mt={1}>
         <IconButton
           arial-label="點擊定位"
