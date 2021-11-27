@@ -1,34 +1,35 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getBusEstimatedNearby, getNearbyStop } from '../../api/index';
 
-export const fetchNearbyStop = createAsyncThunk('bus/nearby/stop', async () => {
-  const response = await getNearbyStop();
+export const fetchNearbyStop = createAsyncThunk('home/nearby/stop', async () => {
+  const response = await getNearbyStop({
+    $select: 'StopUID,StopID,StopName,StopPosition,Bearing,City,StopPosition',
+    $top: 1,
+  });
   return response;
 });
 
-export const fetchBusEstimateNearby = createAsyncThunk('bus/estimate/nearby', async params => {
+export const fetchBusEstimateNearby = createAsyncThunk('home/estimate/nearby', async params => {
   const response = await getBusEstimatedNearby(params);
   return response;
 });
 
 const initialState = {
   nearbyStop: null,
-  nearbyList: [],
   routeList: [],
 };
 
-export const busSlice = createSlice({
-  name: 'bus',
+export const homeSlice = createSlice({
+  name: 'home',
   initialState,
   extraReducers: builder => {
     builder.addCase(fetchNearbyStop.fulfilled, (state, action) => {
       state.nearbyStop = action.payload[0];
     });
     builder.addCase(fetchBusEstimateNearby.fulfilled, (state, action) => {
-      state.nearbyList = action.payload;
+      state.routeList = action.payload;
     });
   },
 });
 
-// export const { searchNearbyBusList } = busSlice.actions;
-export default busSlice.reducer;
+export default homeSlice.reducer;

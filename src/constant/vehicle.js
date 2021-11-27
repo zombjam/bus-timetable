@@ -19,3 +19,14 @@ export const StopStatus = {
   3: '末班車已過',
   4: '今日未營運',
 };
+
+export const Bearing = {
+  E: '東行',
+  W: '西行',
+  S: '南行',
+  N: '北行',
+  SE: '東南行',
+  NE: '東北行',
+  SW: '西南行',
+  NW: '西北行',
+};

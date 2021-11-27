@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
 
-import bus from './bus';
-
-export default combineReducers({ bus });
+import home from './home';
+import nearby from './nearby';
+export default combineReducers({ home, nearby });

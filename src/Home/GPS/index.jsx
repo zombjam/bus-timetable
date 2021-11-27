@@ -5,10 +5,10 @@ import { Box, VStack, Text, Button, HStack, Tag, List, ListItem, Link, Divider }
 import { Footer } from '../../layout';
 import { useIsMobile } from '../../hooks';
 import { Icon, BusDuration, RefreshTimer } from '../../components';
-import { fetchBusEstimateNearby, fetchNearbyStop } from 'store/bus/index';
+import { fetchBusEstimateNearby, fetchNearbyStop } from 'store/home/index';
 
 const BusRoute = () => {
-  const busList = useSelector(state => state.bus.nearbyList);
+  const busList = useSelector(state => state.home.routeList);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchBusEstimateNearby());
@@ -42,7 +42,7 @@ const BusRoute = () => {
 
 const NearbyBusStop = () => {
   const isMobile = useIsMobile();
-  const nearbyStop = useSelector(state => state.bus.nearbyStop);
+  const nearbyStop = useSelector(state => state.home.nearbyStop);
   const dispatch = useDispatch();
 
   useEffect(() => {

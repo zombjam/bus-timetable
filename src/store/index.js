@@ -8,7 +8,7 @@ import reducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['bus'],
+  blacklist: ['home', 'nearby'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
