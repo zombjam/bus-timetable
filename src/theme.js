@@ -77,12 +77,6 @@ const theme = extendTheme({
         //   bg: 'gray.200',
         // },
       },
-      '.overflow-initial': {
-        overflow: 'initial',
-        body: {
-          overflow: 'initial',
-        },
-      },
       // _focus: {
       //   borderColor: '#7550CC !important',
       //   boxShadow: '0 0 0 1px #7550CC !important',
