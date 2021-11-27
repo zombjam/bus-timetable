@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getNearbyStation } from '../../api/index';
 
-export const fetchNearbyStationList = createAsyncThunk('nearby/stations', async () => {
+export const fetchNearbyStationList = createAsyncThunk('nearby/stations', async params => {
   const response = await getNearbyStation({
     $select: 'StationUID,Bearing,StationName,StationPosition,Stops',
+    ...params,
   });
   return response;
 });

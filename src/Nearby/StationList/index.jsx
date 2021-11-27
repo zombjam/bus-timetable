@@ -11,7 +11,7 @@ const StationCard = ({ station }) => {
     <Box w="full" px={3} py={2} border="1px" borderColor="primary.300" rounded="md">
       <HStack spacing={2} mb={1}>
         <Text fontWeight="700">{station?.StationName}</Text>
-        <Tag color="white" bg="gray.500" fontSize="xs" rounded="2xl">
+        <Tag minW="52px" color="white" bg="gray.500" fontSize="xs" rounded="2xl">
           {station?.BearingName}
         </Tag>
       </HStack>

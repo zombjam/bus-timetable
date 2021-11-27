@@ -73,9 +73,9 @@ const theme = extendTheme({
         w: 'full',
         h: 'full',
         bg: 'gray.200',
-        // '> div': {
-        //   bg: 'gray.200',
-        // },
+      },
+      _selection: {
+        bg: 'primary.200',
       },
       // _focus: {
       //   borderColor: '#7550CC !important',
