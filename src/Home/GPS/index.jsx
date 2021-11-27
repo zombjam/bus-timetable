@@ -4,7 +4,7 @@ import { Link as ReactLink } from 'react-router-dom';
 import { Box, VStack, Text, Button, HStack, Tag, List, ListItem, Link, Divider } from '@chakra-ui/react';
 import { Footer } from '../../layout';
 import { useIsMobile } from '../../hooks';
-import { Icon, BusDuration } from '../../components';
+import { Icon, BusDuration, RefreshTimer } from '../../components';
 import { fetchBusEstimateNearby, fetchNearbyStop } from 'store/bus/index';
 
 const BusRoute = () => {
@@ -13,7 +13,6 @@ const BusRoute = () => {
   useEffect(() => {
     dispatch(fetchBusEstimateNearby());
   }, [dispatch]);
-  console.log('busList: ', busList);
 
   return (
     <List px={6} spacing={1.5} w="full" overflow="auto" h="full">
@@ -45,6 +44,7 @@ const NearbyBusStop = () => {
   const isMobile = useIsMobile();
   const nearbyStop = useSelector(state => state.bus.nearbyStop);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchNearbyStop());
   }, [dispatch]);
@@ -69,13 +69,16 @@ const NearbyBusStop = () => {
         最近站牌
       </Text>
       <Box pb={{ base: 8, md: 5 }} h="full">
-        <HStack spacing={2} mb={2} pl={6}>
-          {!!nearbyStop && <Text fontWeight="700">{nearbyStop.StopName}</Text>}
-          {!!nearbyStop?.Bearing && (
-            <Tag color="white" bg="gray.500" fontSize="xs" rounded="2xl">
-              {nearbyStop.Bearing}
-            </Tag>
-          )}
+        <HStack spacing={2} mb={2} px={6} justifyContent="space-between">
+          <Box>
+            {!!nearbyStop && <Text fontWeight="700">{nearbyStop.StopName}</Text>}
+            {!!nearbyStop?.Bearing && (
+              <Tag color="white" bg="gray.500" fontSize="xs" rounded="2xl">
+                {nearbyStop.Bearing}
+              </Tag>
+            )}
+          </Box>
+          <RefreshTimer onTimerChange={() => dispatch(fetchBusEstimateNearby())} />
         </HStack>
         <BusRoute />
       </Box>

@@ -26,7 +26,6 @@ export function getBusEstimatedNearby() {
     .then(data => {
       if (data.length) {
         const filterUIDs = Array.from(new Set(data.map(item => `'${item.RouteUID}'`)));
-        console.log(filterUIDs.join(','));
         return getBusRouteByUID({ $filter: `RouteUID in (${filterUIDs.join(',')})` }).then(routeList => {
           return [data, routeList];
         });
