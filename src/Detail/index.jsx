@@ -14,18 +14,24 @@ const Detail = () => {
   const dispatch = useDispatch();
   const busShapes = useSelector(state => state.detail.busShapes);
   const beginEndPositions = useSelector(state =>
-    state.detail.busStops?.reduce((stops, station) => {
-      if (station.Direction === 1) {
-        const target = station.Stops[station.Stops.length - 1];
-        stops[0] = { icon: BusStartIcon, position: [target.StopPosition.PositionLat, target.StopPosition.PositionLon] };
-      }
-      if (station.Direction === 0) {
-        const target = station.Stops[station.Stops.length - 1];
-        stops[1] = { icon: BusEndIcon, position: [target.StopPosition.PositionLat, target.StopPosition.PositionLon] };
+    state.detail.busStops?.reduce((stops, station, _, arr) => {
+      const target = station.Stops[station.Stops.length - 1];
+      stops.push({
+        icon: station.Direction === 1 ? BusStartIcon : BusEndIcon,
+        position: [target.StopPosition.PositionLat, target.StopPosition.PositionLon],
+      });
+      if (arr.length === 1) {
+        const target = station.Stops[0];
+        stops.push({
+          icon: BusStartIcon,
+          position: [target.StopPosition.PositionLat, target.StopPosition.PositionLon],
+        });
       }
       return stops;
     }, [])
   );
+
+  console.log(beginEndPositions);
 
   useEffect(() => {
     dispatch(fetchBusStops({ city, routeUID }));

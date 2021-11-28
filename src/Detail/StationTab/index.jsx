@@ -117,6 +117,7 @@ const StationCard = ({ stop, index, isLast }) => {
 };
 
 const StationTab = ({ departureName, destinationName }) => {
+  const busStops = useSelector(state => state.detail.busStops);
   const [departureStation, destinationStation] = useSelector(state => {
     const busStops = state.detail.busStops;
     const estimatedData = state.detail.estimatedList;
@@ -150,13 +151,17 @@ const StationTab = ({ departureName, destinationName }) => {
 
   return (
     <>
-      <TabList borderColor="primary.200" mx={{ base: 2, md: 3 }}>
-        <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
-          {destinationName}
-        </Tab>
-        <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
-          {departureName}
-        </Tab>
+      <TabList borderColor="primary.200" mx={{ base: 2, md: 3 }} pb={busStops.length === 1 ? 2 : null}>
+        {busStops?.length > 1 && (
+          <>
+            <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
+              {destinationName}
+            </Tab>
+            <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
+              {departureName}
+            </Tab>
+          </>
+        )}
       </TabList>
 
       <TabPanels h="full" overflow="auto">
