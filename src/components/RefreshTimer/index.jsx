@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { HStack, Text } from '@chakra-ui/react';
+import { HStack, Box, Text } from '@chakra-ui/react';
 import Icon from '../Icon';
 
 const RefreshTimer = ({ onTimerChange }) => {
@@ -26,9 +26,12 @@ const RefreshTimer = ({ onTimerChange }) => {
 
   return (
     <HStack spacing={1}>
-      <Text color="gray.700" fontSize="xs">
-        {timeLeft}秒後更新
-      </Text>
+      <Box display="flex" color="gray.700" fontSize="xs">
+        <Text minW={3.5} textAlign="center">
+          {timeLeft}
+        </Text>
+        秒後更新
+      </Box>
       <Icon name="Refresh" cursor="pointer" onClick={() => clickRefresh()} />
     </HStack>
   );

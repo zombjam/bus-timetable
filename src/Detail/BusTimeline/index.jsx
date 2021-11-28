@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Text, HStack, Slide, Tabs } from '@chakra-ui/react';
 import { useSwipeable } from 'react-swipeable';
-import { useIsMobile, useIsDesktop, useQuery } from '../../hooks';
-import { PositionButton, Icon } from '../../components';
+import { useSelector, useDispatch } from 'react-redux';
+import { useIsMobile, useIsDesktop } from '../../hooks';
+import { PositionButton, Icon, RefreshTimer } from '../../components';
 import StationTab from '../StationTab';
+import { fetchBusEstimatedTimeList } from '../../store/detail/index';
 
 const ListStatus = {
   default: 'default',
@@ -11,18 +13,15 @@ const ListStatus = {
   close: 'close',
 };
 
-const StationList = () => {
-  const query = useQuery();
+const BusTimeline = ({ city, routeUID }) => {
   const isMobile = useIsMobile();
   const isDesktop = useIsDesktop();
   const [listStatus, setListStatus] = useState(ListStatus.default);
   const [prevStatus, setPrevStatus] = useState();
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-  useEffect(() => {
-    console.log(`query`, query.get('city'));
-  }, [query]);
+  const busInfo = useSelector(state => state.detail.busInfo);
+  const dispatch = useDispatch();
 
   const handleSwipedUp = eventData => {
     if (listStatus === ListStatus.open) return;
@@ -115,16 +114,10 @@ const StationList = () => {
       />
       <Box pt={{ md: 8 }} bg="white" rounded={{ md: '0 60px 0 0' }} overflow="hidden" h={{ md: 'full' }}>
         <Box px={{ base: 5, md: 6 }}>
-          <HStack mb={1} spacing={2}>
-            <Text fontSize="xs" color="gray.700">
-              10秒後更新
-            </Text>
-            <Icon name="Refresh" />
-          </HStack>
+          <RefreshTimer onTimerChange={() => dispatch(fetchBusEstimatedTimeList({ city, routeUID }))} />
           <HStack justifyContent="space-between" alignItems="flex-start">
             <Text color="gray.800" fontSize="2xl" fontWeight="500">
-              {/* E25高旗六龜快線(08:20前不行經高鐵左營站) */}
-              100百貨幹線
+              {busInfo?.RouteName}
             </Text>
             <Icon name="moreInfo" boxSize={6} />
           </HStack>
@@ -137,11 +130,11 @@ const StationList = () => {
             height: handleListHeight(),
           }}
         >
-          <StationTab />
+          {busInfo && <StationTab departureName={busInfo.DepartureStopName} destinationName={busInfo.DestinationStopName} />}
         </Tabs>
       </Box>
     </Slide>
   );
 };
 
-export default StationList;
+export default BusTimeline;

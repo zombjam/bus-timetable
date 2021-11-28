@@ -17,5 +17,5 @@ export const HomeNavMenus = [
 export const MobileMenus = [
   { name: '回首頁', path: routes.home },
   { name: '公車快找', path: routes.search },
-  { name: '查詢公車', path: routes.nearby },
+  { name: '查詢站牌', path: routes.nearby },
 ];

@@ -6,6 +6,8 @@ import TrackingSpotImg from '../../assets/images/TrackingSpot.svg';
 import TrackingBg from '../../assets/images/trackingBg.png';
 import BusStopImg from '../../assets/images/BusStop.png';
 import BusStopActiveImg from '../../assets/images/BusStop_active.png';
+import BusStartImg from '../../assets/images/BusStop_start.png';
+import BusEndImg from '../../assets/images/BusStop_end.png';
 
 const GPS_ICON = new L.icon({
   iconUrl: TrackingSpotImg,
@@ -27,6 +29,18 @@ const BusActiveIcon = new L.icon({
   iconSize: [41, 49],
 });
 
+const BusStartIcon = new L.icon({
+  iconUrl: BusStartImg,
+  iconAnchor: null,
+  iconSize: [31, 42],
+});
+
+const BusEndIcon = new L.icon({
+  iconUrl: BusEndImg,
+  iconAnchor: null,
+  iconSize: [31, 42],
+});
+
 // const generateMarkerIcon = quantity =>
 //   L.divIcon({
 //     iconSize: [58, 73],
@@ -36,4 +50,4 @@ const BusActiveIcon = new L.icon({
 //     html: ReactDOMServer.renderToString(<MarkerIcon quantity={quantity} />),
 //   });
 
-export { GPS_ICON, BusMarkerIcon, BusActiveIcon };
+export { GPS_ICON, BusMarkerIcon, BusActiveIcon, BusStartIcon, BusEndIcon };

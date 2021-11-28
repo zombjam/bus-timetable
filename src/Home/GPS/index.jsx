@@ -7,10 +7,8 @@ import { useIsMobile } from '../../hooks';
 import { Icon, BusDuration, RefreshTimer } from '../../components';
 import { fetchBusEstimateNearby, fetchNearbyStop } from 'store/home/index';
 import { openGPS, getGeolocation } from 'store/search/index';
-import { setBusInfo } from 'store/detail/index';
 
 const BusRoute = () => {
-  const dispatch = useDispatch();
   const loading = useSelector(state => state.home.loading);
   const busList = useSelector(state => state.home.routeList);
 
@@ -18,12 +16,7 @@ const BusRoute = () => {
     <List px={6} spacing={1.5} w="full" overflow="auto" h="full">
       {busList.map((item, i) => (
         <ListItem key={`${item.RouteUID}_${i}`}>
-          <Link
-            as={ReactLink}
-            to={`/detail?city=${item.City}&routeName=${item.RouteName}`}
-            onClick={() => dispatch(setBusInfo({ city: item.City, routeName: item.RouteName, busRouteType: item.BusRouteType }))}
-            _hover={{}}
-          >
+          <Link as={ReactLink} to={item.City ? `/detail/${item.City}/${item.RouteUID}` : `/detail/InterCity/${item.RouteUID}`} _hover={{}}>
             <HStack spacing={0} mb={1.5}>
               <BusDuration estimated={item.EstimateTime} stopStatus={item.StopStatus} statusName={item.StopStatusName} />
               <Box flex="1">

@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Text, HStack, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { BusDuration } from '../../components';
 
 const ButtonStyles = {
   color: 'gray.500',
@@ -24,10 +26,10 @@ const ButtonStyles = {
 const suffixLine = {
   content: '""',
   position: 'absolute',
-  top: '50%',
+  top: 'calc(50%  + 5.5px)',
   right: '13px',
   width: '1px',
-  height: '50%',
+  height: 'calc(50% - 5.5px)',
   bg: '#E9ECEF',
 };
 
@@ -48,8 +50,8 @@ const activeStyles = {
   },
 };
 
-const StationCard = ({ index, isLast }) => {
-  let activeIndx = 2;
+const StationCard = ({ stop, index, isLast }) => {
+  let activeIndx = null;
 
   return (
     <HStack
@@ -61,17 +63,24 @@ const StationCard = ({ index, isLast }) => {
       borderColor="gray.400"
       position="relative"
       sx={{ '&:after': isLast ? null : suffixLine, '&:before': !!index ? { ...suffixLine, top: 0 } : null }}
+      cursor="pointer"
+      _hover={{ bg: 'rgba(238, 234, 249, 0.5)' }}
     >
-      <HStack minW="60px" spacing={1} justifyContent="center">
+      {/* <HStack minW="60px" spacing={1} justifyContent="center">
         <Text fontSize="xl" fontWeight="500">
           2
         </Text>
         <Text>分</Text>
-        {/* <Tag color="white" bg="gray.500" fontSize="xs">
+        <Tag color="white" bg="gray.500" fontSize="xs">
           末班已過
-        </Tag> */}
-      </HStack>
-      <Text pr={2}>{index + 1}. 瑞豐路(瑞隆路)</Text>
+        </Tag>
+      </HStack> */}
+      <Box minW="85px">
+        <BusDuration estimated={stop.EstimateTime} stopStatus={stop.StopStatus} statusName={stop.StopStatusName} />
+      </Box>
+      <Text pr={2}>
+        {stop.StopSequence}. {stop.StopName}
+      </Text>
       <Box
         position="absolute"
         w="11px"
@@ -80,7 +89,6 @@ const StationCard = ({ index, isLast }) => {
         borderColor="gray.400"
         borderRadius="full"
         top="50%"
-        bg="white"
         zIndex={10}
         right={2}
         transform="translateY(-50%)"
@@ -108,28 +116,61 @@ const StationCard = ({ index, isLast }) => {
   );
 };
 
-const StationTab = () => {
+const StationTab = ({ departureName, destinationName }) => {
+  const [departureStation, destinationStation] = useSelector(state => {
+    const busStops = state.detail.busStops;
+    const estimatedData = state.detail.estimatedList;
+    return busStops.map(station => {
+      if (estimatedData?.length) {
+        return {
+          ...station,
+          Stops: station.Stops.map(stop => {
+            const mappingEstimated = estimatedData.find(estimated => estimated.StopUID === stop.StopUID);
+            if (!mappingEstimated) {
+              return stop;
+            }
+            let EstimateTime = null;
+            if (mappingEstimated.EstimateTime != null) {
+              EstimateTime = mappingEstimated.EstimateTime;
+            } else if (!!mappingEstimated.Estimates?.length) {
+              EstimateTime = mappingEstimated.Estimates.sort((a, b) => a.EstimateTime - b.EstimateTime)[0].EstimateTime;
+            }
+            return {
+              ...stop,
+              EstimateTime,
+              StopStatus: mappingEstimated.StopStatus,
+              StopStatusName: mappingEstimated.StopStatusName,
+            };
+          }),
+        };
+      }
+      return station;
+    });
+  });
+
   return (
     <>
       <TabList borderColor="primary.200" mx={{ base: 2, md: 3 }}>
         <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
-          One
+          {destinationName}
         </Tab>
         <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
-          Two
+          {departureName}
         </Tab>
       </TabList>
 
       <TabPanels h="full" overflow="auto">
         <TabPanel h="full" px={2} pt={1} pb={12}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((_, indx, arr) => (
-            <StationCard key={indx} index={indx} isLast={indx === arr.length - 1} />
-          ))}
+          {departureStation &&
+            departureStation.Stops?.map((stop, indx, arr) => (
+              <StationCard key={stop.StopUID} stop={stop} index={indx} isLast={indx === arr.length - 1} />
+            ))}
         </TabPanel>
         <TabPanel h="full" px={2} pt={1} pb={12}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((_, indx, arr) => (
-            <StationCard key={indx} index={indx} isLast={indx === arr.length - 1} />
-          ))}
+          {destinationStation &&
+            destinationStation.Stops?.map((stop, indx, arr) => (
+              <StationCard key={stop.StopUID} stop={stop} index={indx} isLast={indx === arr.length - 1} />
+            ))}
         </TabPanel>
       </TabPanels>
     </>

@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { getGeolocation } from 'store/search/index';
+import { useInterval } from './hooks';
 
 import Home from './Home';
 import Nearby from './Nearby';
@@ -14,18 +15,12 @@ function App() {
   const dispatch = useDispatch();
 
   const [timeLeft, setTimeLeft] = useState(300); // 5分鐘更新一次位置
-  const intervalRef = useRef();
 
-  useEffect(() => {
-    if (isOpenGPS) {
-      intervalRef.current = setInterval(() => {
-        setTimeLeft(t => t - 1);
-      }, 1000);
-      return () => {
-        return clearInterval(intervalRef.current);
-      };
-    }
-  }, [isOpenGPS]);
+  // useInterval(() => {
+  //   if (isOpenGPS) {
+  //     setTimeLeft(timeLeft - 1);
+  //   }
+  // }, 1000);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -41,7 +36,7 @@ function App() {
         <Route exact path="/nearby" element={<Nearby />}></Route>
         <Route exact path="/search" element={<Search />}></Route>
         <Route exact path="/recommend" element={<Recommend />}></Route>
-        <Route exact path="/detail" element={<Detail />}></Route>
+        <Route path="/detail/:city/:routeUID" element={<Detail />}></Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </HashRouter>

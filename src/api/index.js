@@ -114,3 +114,89 @@ export function getBusEstimatedNearby(params) {
 }
 
 // 路線站名關鍵字搜尋 $filter: 'contains(RouteName/Zh_tw, keyword)'
+
+const initBusRouteInfo = {
+  $select: 'RouteUID,Operators,RouteName,DepartureStopNameZh,DestinationStopNameZh,TicketPriceDescriptionZh,RouteMapImageUrl',
+};
+export function getBusRouteInfo(city, routeUID) {
+  const url = `/Bus/Route/${city === 'InterCity' ? city : `City/${city}`}`;
+  const params = {
+    $filter: `RouteUID eq '${routeUID}'`,
+  };
+  return ajax(url, { ...initBusRouteInfo, ...params })
+    .then(data =>
+      data.map(item => {
+        const { DepartureStopNameZh, DestinationStopNameZh, ...model } = item;
+        return {
+          ...model,
+          RouteName: item.RouteName.Zh_tw,
+          DepartureStopName: DepartureStopNameZh,
+          DestinationStopName: DestinationStopNameZh,
+        };
+      })
+    )
+    .then(data => data[0]);
+}
+
+const initStopOfRoute = {
+  $select: 'RouteUID,RouteName,Direction,City,Stops',
+};
+export function getStopOfRoute(city, routeUID) {
+  const url = `/Bus/StopOfRoute/${city === 'InterCity' ? city : `City/${city}`}`;
+  const params = {
+    $filter: `RouteUID eq '${routeUID}'`,
+  };
+  return ajax(url, { ...initStopOfRoute, ...params }).then(data =>
+    data.map(item => ({
+      ...item,
+      DirectionName: Direction[item.Direction],
+      RouteName: item.RouteName.Zh_tw,
+      Stops: item.Stops.map(stop => ({
+        ...stop,
+        StopName: stop.StopName.Zh_tw,
+      })),
+    }))
+  );
+}
+
+const initBusShape = {
+  $select: 'RouteUID,RouteName,Direction,Geometry,EncodedPolyline',
+};
+export function getBusRouteShape(city, routeUID) {
+  const url = `/Bus/Shape/${city === 'InterCity' ? city : `City/${city}`}`;
+  const params = {
+    $filter: `RouteUID eq '${routeUID}'`,
+  };
+  return ajax(url, { ...initBusShape, ...params })
+    .then(data =>
+      data.map(item => ({
+        ...item,
+        Coordinates: item.Geometry.match(/\(([^)]+)\)/)
+          .pop()
+          .split(',')
+          .map(latlng =>
+            latlng
+              .split(' ')
+              .map(x => parseFloat(x))
+              .reverse()
+          ),
+      }))
+    )
+    .then(data => data[0]?.Coordinates);
+}
+
+const initBusEstimatedTimeOfArrivalList = {
+  $select: 'PlateNumb,StopUID,StopName,RouteUID,RouteName,Direction,EstimateTime,Estimates,StopCountDown,StopSequence,StopStatus,IsLastBus',
+};
+export function getBusEstimatedTimeOfArrivalList(city, routeUID) {
+  const url = `/Bus/EstimatedTimeOfArrival/${city === 'InterCity' ? city : `City/${city}`}`;
+  const params = {
+    $filter: `RouteUID eq '${routeUID}'`,
+  };
+  return ajax(url, { ...initBusEstimatedTimeOfArrivalList, ...params }).then(data =>
+    data.map(item => ({
+      ...item,
+      StopStatusName: StopStatus[item.StopStatus],
+    }))
+  );
+}

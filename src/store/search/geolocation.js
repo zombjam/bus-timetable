@@ -14,12 +14,12 @@ const geolocation = async () => {
           // resolve([23.382, 121.035]);
         },
         error => {
-          reject(error);
+          reject('無法檢索您的位置。');
         },
         options
       );
     } else {
-      reject({ message: '您的瀏覽器不支援地理定位功能' });
+      reject('您的瀏覽器不支援地理定位功能');
     }
   });
 };

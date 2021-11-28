@@ -38,7 +38,7 @@ export const searchSlice = createSlice({
       state.geoLoading = false;
     });
     builder.addCase(getGeolocation.rejected, (state, action) => {
-      state.gpsStatus = '定位失敗';
+      state.gpsStatus = action.payload;
       state.geoLoading = false;
     });
   },
