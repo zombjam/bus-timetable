@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/bus-timetable/static/js/main.c4e871bb.chunk.js",
-    "main.js.map": "/bus-timetable/static/js/main.c4e871bb.chunk.js.map",
+    "main.js": "/bus-timetable/static/js/main.58b82e40.chunk.js",
+    "main.js.map": "/bus-timetable/static/js/main.58b82e40.chunk.js.map",
     "runtime-main.js": "/bus-timetable/static/js/runtime-main.9431ece0.js",
     "runtime-main.js.map": "/bus-timetable/static/js/runtime-main.9431ece0.js.map",
     "static/css/2.68ba508b.chunk.css": "/bus-timetable/static/css/2.68ba508b.chunk.css",
@@ -21,6 +21,6 @@
     "static/js/runtime-main.9431ece0.js",
     "static/css/2.68ba508b.chunk.css",
     "static/js/2.76e3eeed.chunk.js",
-    "static/js/main.c4e871bb.chunk.js"
+    "static/js/main.58b82e40.chunk.js"
   ]
 }
