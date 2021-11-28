@@ -17,7 +17,7 @@ const Detail = () => {
       <Desktop>
         <Footer />
       </Desktop>
-      <Map />
+      {/* <Map  /> */}
     </Box>
   );
 };

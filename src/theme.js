@@ -77,10 +77,26 @@ const theme = extendTheme({
       _selection: {
         bg: 'primary.200',
       },
-      // _focus: {
-      //   borderColor: '#7550CC !important',
-      //   boxShadow: '0 0 0 1px #7550CC !important',
-      // },
+      '.leaflet-tooltip': {
+        bg: 'primary.700',
+        color: 'white',
+        px: 4,
+        py: 2,
+        opacity: '1 !important',
+        fontWeight: 'bold',
+        rounded: '2xl',
+        border: 0,
+        '&::before': {
+          display: 'none',
+        },
+      },
+      '&::-webkit-scrollbar': {
+        width: '6px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        bg: '#A6AAB4',
+        borderRadius: '1rem',
+      },
     },
   },
   fonts,

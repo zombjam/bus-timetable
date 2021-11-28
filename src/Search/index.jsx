@@ -1,10 +1,13 @@
 import React from 'react';
 import { Box, InputGroup, Input, InputRightElement } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import { MenuBar, Desktop, Footer } from '../layout';
 import { Dropdown, Icon, Map } from '../components';
 import SearchList from './SearchList';
 
 const Search = () => {
+  const isOpenGPS = useSelector(state => state.search.isOpenGPS);
+
   return (
     <Box display="flex" flexDirection="column" h="full">
       <MenuBar />
@@ -52,7 +55,7 @@ const Search = () => {
         <Footer />
       </Desktop>
       <Desktop flex="1">
-        <Map />
+        <Map zoom={isOpenGPS ? 16 : 8}> </Map>
       </Desktop>
     </Box>
   );

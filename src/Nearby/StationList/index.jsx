@@ -8,7 +8,7 @@ import { Icon } from '../../components';
 
 const StationCard = ({ station }) => {
   return (
-    <Box w="full" px={3} py={2} border="1px" borderColor="primary.300" rounded="md">
+    <Box w="full" px={3} py={2} border="1px" borderColor="primary.300" rounded="md" cursor="pointer" _hover={{ bgColor: 'primary.200' }}>
       <HStack spacing={2} mb={1}>
         <Text fontWeight="700">{station?.StationName}</Text>
         <Tag justifyContent="center" whiteSpace="nowrap" minH="auto" py={1} color="white" bg="gray.500" fontSize="xs" rounded="2xl">
@@ -102,7 +102,8 @@ const StationList = () => {
           <Icon name="BusStop" />
         </Text>
         <VStack
-          px={{ base: 5, md: 6 }}
+          mx={3}
+          px={{ base: 2, md: 3 }}
           spacing={3}
           overflow="auto"
           pb={{ base: 8, md: 16 }}

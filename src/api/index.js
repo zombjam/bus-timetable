@@ -99,9 +99,8 @@ export function getBusEstimatedNearby(params) {
           ...item,
           DepartureStopName: target?.DepartureStopNameZh,
           DestinationStopName: target?.DestinationStopNameZh,
-          source: target,
           City: target?.City,
-          ButRouteType: target?.BusRouteType,
+          BusRouteType: target?.BusRouteType,
         };
       });
     })

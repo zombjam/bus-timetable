@@ -5,10 +5,10 @@ import { Icon } from '../../components';
 
 const SearchList = ({ isHistory }) => {
   return (
-    <List spacing={1.5} px={6} overflow="auto" h="full">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
+    <List spacing={1.5} mx={3} px={3} overflow="auto" h="full">
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => (
         <ListItem key={i}>
-          <Link as={ReactLink} to="/detail">
+          <Link as={ReactLink} to="/detail" _hover={{}}>
             <HStack mb={1.5}>
               <Box flex="1">
                 <HStack spacing={3} pl={isHistory ? '' : 7}>

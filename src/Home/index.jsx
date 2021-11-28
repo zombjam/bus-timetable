@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Desktop, Header, Footer } from '../layout';
-import { Map, BusMarker } from '../components';
+import { Map, BusMarker, LocationMarker, GPS_ICON } from '../components';
 import Nav from './Nav';
 import GPS from './GPS';
 import { useIsMobile } from '../hooks';
@@ -11,6 +11,7 @@ const Home = () => {
   const isMobile = useIsMobile();
   const isOpenGPS = useSelector(state => state.search.isOpenGPS);
   const nearbyStop = useSelector(state => state.home.nearbyStop);
+  const position = useSelector(state => state.search.currentPosition);
 
   return (
     <Box
@@ -28,8 +29,14 @@ const Home = () => {
         <GPS />
       </Box>
       <Desktop flex="1">
-        <Map zoom={isOpenGPS && !!nearbyStop ? 16 : 8}>
-          {!!nearbyStop && <BusMarker position={[nearbyStop.StopPosition.PositionLat, nearbyStop.StopPosition.PositionLon]} />}
+        <Map zoom={isOpenGPS ? 16 : 8} center={position}>
+          {!!position.length && <LocationMarker position={position} icon={GPS_ICON} title="目前的位置" alt="目前的位置"></LocationMarker>}
+          {!!nearbyStop && (
+            <BusMarker
+              stopName={nearbyStop.StopName}
+              position={[nearbyStop.StopPosition.PositionLat, nearbyStop.StopPosition.PositionLon]}
+            />
+          )}
         </Map>
       </Desktop>
       {isMobile && !nearbyStop && <Footer />}

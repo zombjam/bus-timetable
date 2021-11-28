@@ -30,3 +30,10 @@ export const Bearing = {
   SW: '西南行',
   NW: '西北行',
 };
+
+export const BusRouteType = {
+  11: '市區公車',
+  12: '公路客運',
+  13: '國道客運',
+  14: '接駁車',
+};

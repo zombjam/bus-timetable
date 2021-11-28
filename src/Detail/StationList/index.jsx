@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Text, HStack, Slide, Tabs } from '@chakra-ui/react';
 import { useSwipeable } from 'react-swipeable';
-import { useIsMobile, useIsDesktop } from '../../hooks';
+import { useIsMobile, useIsDesktop, useQuery } from '../../hooks';
 import { PositionButton, Icon } from '../../components';
 import StationTab from '../StationTab';
 
@@ -12,12 +12,17 @@ const ListStatus = {
 };
 
 const StationList = () => {
+  const query = useQuery();
   const isMobile = useIsMobile();
   const isDesktop = useIsDesktop();
   const [listStatus, setListStatus] = useState(ListStatus.default);
   const [prevStatus, setPrevStatus] = useState();
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+  useEffect(() => {
+    console.log(`query`, query.get('city'));
+  }, [query]);
 
   const handleSwipedUp = eventData => {
     if (listStatus === ListStatus.open) return;
