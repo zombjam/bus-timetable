@@ -9,13 +9,8 @@ import { fetchBusEstimateNearby, fetchNearbyStop } from 'store/home/index';
 import { openGPS, getGeolocation } from 'store/search/index';
 
 const BusRoute = () => {
-  const position = useSelector(state => state.search.currentPosition);
+  const loading = useSelector(state => state.home.loading);
   const busList = useSelector(state => state.home.routeList);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchBusEstimateNearby({ position }));
-  }, [dispatch, position]);
 
   return (
     <List px={6} spacing={1.5} w="full" overflow="auto" h="full">
@@ -39,6 +34,11 @@ const BusRoute = () => {
           <Divider w="96%" mx="auto" borderColor="#E0E0E0" />
         </ListItem>
       ))}
+      {loading === false && !busList?.length && (
+        <Text textAlign="center" pt={6} color="gray.500">
+          附近找不到站牌
+        </Text>
+      )}
     </List>
   );
 };
@@ -46,7 +46,9 @@ const BusRoute = () => {
 const NearbyBusStop = ({ status }) => {
   const isMobile = useIsMobile();
   const position = useSelector(state => state.search.currentPosition);
+  const loading = useSelector(state => state.search.geoLoading);
   const nearbyStop = useSelector(state => state.home.nearbyStop);
+  const filterParams = useSelector(state => state.home.nearbyFilter);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -54,53 +56,57 @@ const NearbyBusStop = ({ status }) => {
   }, [dispatch, position]);
 
   return (
-    <Box
-      flex="1"
-      borderRadius="0 60px 0 0"
-      pt={6}
-      pb={{ base: 8, md: 12 }}
-      bg={{ base: 'white', md: 'gray.200' }}
-      shadow="base"
-      position={{ base: 'relative', md: 'absolute' }}
-      bottom={{ md: 0 }}
-      w={{ md: 1 / 3, lg: 1 / 4 }}
-      h={{ md: '80%' }}
-      zIndex={{ md: 2000 }}
-      alignItems="flex-start"
-      overflow="hidden"
-    >
-      <Text color="gray.600" mb={1} pl={6}>
-        最近站牌
-      </Text>
-      <Box pb={{ base: 8, md: 5 }} h="full">
-        <HStack spacing={2} mb={2} px={6} justifyContent="space-between">
-          <HStack spacing={1}>
-            {!!nearbyStop && <Text fontWeight="700">{nearbyStop.StopName}</Text>}
-            {!!nearbyStop?.Bearing && (
-              <Tag color="white" bg="gray.500" fontSize="xs" rounded="2xl">
-                {nearbyStop.BearingName}
-              </Tag>
+    <>
+      <Box
+        flex="1"
+        borderRadius="0 60px 0 0"
+        pt={8}
+        pb={{ base: 8, md: 12 }}
+        bg={{ base: 'white', md: 'gray.200' }}
+        shadow="base"
+        position={{ base: 'relative', md: 'absolute' }}
+        bottom={{ md: 0 }}
+        w={{ md: 1 / 3, lg: 1 / 4 }}
+        h={{ md: '80%' }}
+        zIndex={{ md: 2000 }}
+        alignItems="flex-start"
+        overflow="hidden"
+      >
+        <Text color="gray.500" mb={1} pl={6}>
+          最近站牌
+        </Text>
+        <Box pb={{ base: 8, md: 5 }} h="full">
+          <HStack spacing={2} mb={2} px={6} justifyContent="space-between">
+            <HStack spacing={1}>
+              <Text fontWeight="700">{nearbyStop?.StopName}</Text>
+              {!!nearbyStop?.Bearing && (
+                <Tag color="white" bg="gray.500" fontSize="xs" rounded="2xl">
+                  {nearbyStop.BearingName}
+                </Tag>
+              )}
+            </HStack>
+            {!!position.length && !!filterParams && (
+              <RefreshTimer onTimerChange={() => dispatch(fetchBusEstimateNearby({ position, $filter: filterParams }))} />
             )}
           </HStack>
-          {!!position.length && <RefreshTimer onTimerChange={() => dispatch(fetchBusEstimateNearby({ position }))} />}
-        </HStack>
+          {!position.length && (
+            <Text color="gray.600" fontSize="lg" pt={4} px={6} textAlign="center">
+              {status}
+            </Text>
+          )}
+          {loading === false && <BusRoute />}
+        </Box>
 
-        {!position.length && (
-          <Text color="gray.600" fontSize="lg" pt={4} px={6} textAlign="center">
-            {status}
-          </Text>
-        )}
-        <BusRoute />
+        {isMobile && <Footer position="absolute" />}
       </Box>
-
-      {isMobile && <Footer position="absolute" />}
-    </Box>
+    </>
   );
 };
 
 const GPS = () => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
+
   const isOpenGPS = useSelector(state => state.search.isOpenGPS);
   const gpsStatus = useSelector(state => state.search.gpsStatus);
 
@@ -153,6 +159,11 @@ const GPS = () => {
       {!isOpenGPS && isMobile && <Footer />}
       {isOpenGPS && (
         <>
+          {!isMobile && gpsStatus && (
+            <Text color="gray.600" fontSize="lg" pt={4} px={6} textAlign="center">
+              {gpsStatus}
+            </Text>
+          )}
           <NearbyBusStop status={gpsStatus} />
           {!isMobile && <Footer />}
         </>

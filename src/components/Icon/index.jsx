@@ -1,8 +1,7 @@
 import { Icon as ChakraIcon } from '@chakra-ui/icon';
 import React from 'react';
 
-// import Icons from '../../assets/sprite.svg';
-import Icons from '../../assets/sprite2.svg';
+import Icons from '../../assets/sprite.svg';
 
 const Icon = ({ name, color, size, ...rest }) => {
   return (

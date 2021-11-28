@@ -8,7 +8,7 @@ const getTimeFormat = seconds => {
     if (seconds >= 1800) {
       const now = new Date();
       time = format(addSeconds(now, seconds), 'HH:mm');
-    } else if (seconds > 0) {
+    } else if (seconds >= 60) {
       minutes = Math.floor(seconds / 60);
     } else {
       time = '進站中';

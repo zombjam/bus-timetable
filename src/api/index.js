@@ -1,18 +1,43 @@
 import ajax from './ajax';
 import { Direction, StopStatus, Bearing } from '../constant/vehicle';
-
-// const defaultNearby = {
-//   $spatialFilter: 'nearby(24.122771, 120.651540, 500)',
-// };
+import { distance } from '../utils/geo-helper';
 
 const initNearbyStop = {
-  $top: 30,
+  $select: 'StationID,StationGroupID,StopUID,StopID,StopName,StopPosition,Bearing,StopAddress,City',
+  $top: 10,
 };
+
 // 取得指定[位置範圍]的公車站牌資料
-export function getNearbyStop(params) {
-  return ajax(`/Bus/Stop/NearBy`, { ...initNearbyStop, ...params }).then(data =>
-    data.map(item => ({ ...item, StopName: item.StopName.Zh_tw, BearingName: Bearing[item.Bearing] }))
-  );
+export function getNearbyStop(params, position) {
+  return ajax(`/Bus/Stop/NearBy`, { ...initNearbyStop, ...params })
+    .then(data => {
+      const result = data
+        .map(item => ({
+          ...item,
+          StopName: item.StopName.Zh_tw,
+          BearingName: Bearing[item.Bearing],
+          distance: distance(position[0], position[1], item.StopPosition.PositionLat, item.StopPosition.PositionLon),
+        }))
+        .sort((a, b) => a.distance - b.distance);
+      return result[0];
+    })
+    .then(busStop => {
+      if (!busStop) {
+        return { busStop: null, filterParams: '', routes: [] };
+      }
+      return getNearbyStation({ ...params, $filter: `StationID eq '${busStop.StationID}'` }).then(data => {
+        if (data[0]) {
+          const routeUIDs = data[0].Stops.map(x => `'${x.RouteUID}'`);
+          if (routeUIDs.length) {
+            const filterParams = `RouteUID in (${routeUIDs.join(',')})`;
+            return getBusEstimatedNearby({ $filter: filterParams, ...params }).then(routes => {
+              return { busStop, filterParams, routes };
+            });
+          }
+        }
+        return { busStop };
+      });
+    });
 }
 
 export function getNearbyStation(params) {
@@ -40,7 +65,7 @@ export function getBusRouteByUID(params) {
 
 const initBusEstimatedRouteNearby = {
   $select: 'RouteUID,RouteName,StopStatus,EstimateTime,Direction',
-  $top: 20,
+  $top: 30,
 };
 // 取得指定[位置範圍]的預測公車到站資料
 export function getBusEstimatedNearby(params) {
@@ -74,6 +99,9 @@ export function getBusEstimatedNearby(params) {
           ...item,
           DepartureStopName: target?.DepartureStopNameZh,
           DestinationStopName: target?.DestinationStopNameZh,
+          source: target,
+          City: target?.City,
+          ButRouteType: target?.BusRouteType,
         };
       });
     })

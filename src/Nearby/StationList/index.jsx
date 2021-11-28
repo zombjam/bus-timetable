@@ -26,7 +26,9 @@ const StationList = () => {
   const isMobile = useIsMobile();
   const isDesktop = useIsDesktop();
   const [isOpen, setIsOpen] = useState(false);
-  const position = useSelector(state => state.search.currentPosition);
+  const position = useSelector(state =>
+    state.search.currentPosition?.length ? state.search.currentPosition : state.search.defaultPosition
+  );
   const dispatch = useDispatch();
   const stationList = useSelector(state => state.nearby.stationList);
   const vh = window.innerHeight * 0.01;

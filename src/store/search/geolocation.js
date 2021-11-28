@@ -11,6 +11,7 @@ const geolocation = async () => {
         position => {
           const userLocation = [position.coords.latitude, position.coords.longitude];
           resolve(userLocation);
+          // resolve([23.382, 121.035]);
         },
         error => {
           reject(error);

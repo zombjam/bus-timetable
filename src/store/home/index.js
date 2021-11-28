@@ -1,19 +1,25 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getBusEstimatedNearby, getNearbyStop } from '../../api/index';
 
+const initialState = {
+  nearbyStop: null,
+  nearbyFilter: '',
+  routeList: [],
+  loading: null,
+};
+
 export const fetchNearbyStop = createAsyncThunk('home/nearby/stop', async params => {
   const { position, ...remain } = params;
   const query = {
-    $select: 'StopUID,StopID,StopName,StopPosition,Bearing,City,StopPosition',
-    $top: 1,
     ...remain,
   };
   if (!!position.length) {
     query.$spatialFilter = `nearby(${position[0]}, ${position[1]}, 500)`;
-    const response = await getNearbyStop(query);
+    const response = await getNearbyStop(query, position);
+
     return response;
   }
-  return [];
+  return null;
 });
 
 export const fetchBusEstimateNearby = createAsyncThunk('home/estimate/nearby', async params => {
@@ -27,17 +33,21 @@ export const fetchBusEstimateNearby = createAsyncThunk('home/estimate/nearby', a
   return [];
 });
 
-const initialState = {
-  nearbyStop: null,
-  routeList: [],
-};
-
 export const homeSlice = createSlice({
   name: 'home',
   initialState,
   extraReducers: builder => {
-    builder.addCase(fetchNearbyStop.fulfilled, (state, action) => {
-      state.nearbyStop = action.payload[0];
+    builder.addCase(fetchNearbyStop.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchNearbyStop.fulfilled, (state, { payload }) => {
+      if (payload) {
+        const { busStop, filterParams, routes } = payload;
+        state.nearbyStop = busStop;
+        state.nearbyFilter = filterParams;
+        state.routeList = routes;
+        state.loading = false;
+      }
     });
     builder.addCase(fetchBusEstimateNearby.fulfilled, (state, action) => {
       state.routeList = action.payload;

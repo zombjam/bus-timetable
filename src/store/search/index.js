@@ -2,10 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import geolocation from './geolocation';
 
 const initialState = {
-  // currentPosition: [24.122771, 120.65154],
+  defaultPosition: [24.122771, 120.65154],
   currentPosition: [],
   isOpenGPS: false,
   gpsStatus: null,
+  geoLoading: null,
 };
 
 export const getGeolocation = createAsyncThunk('search/geolocation', async (isShowMsg, thunkAPI) => {
@@ -28,14 +29,17 @@ export const searchSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getGeolocation.pending, (state, action) => {
       state.gpsStatus = '定位中...';
+      state.geoLoading = true;
     });
     builder.addCase(getGeolocation.fulfilled, (state, { payload }) => {
       const { position } = payload;
       state.gpsStatus = null;
       state.currentPosition = position;
+      state.geoLoading = false;
     });
     builder.addCase(getGeolocation.rejected, (state, action) => {
       state.gpsStatus = '定位失敗';
+      state.geoLoading = false;
     });
   },
 });
