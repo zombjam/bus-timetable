@@ -1,11 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { defaultPosition } from 'constant/general';
 import { getNearbyStation } from '../../api/index';
 
 export const fetchNearbyStationList = createAsyncThunk('nearby/stations', async params => {
-  const response = await getNearbyStation({
+  const { position, ...remain } = params;
+  let currPosition = !!position?.length ? position : defaultPosition;
+  const query = {
     $select: 'StationUID,Bearing,StationName,StationPosition,Stops',
-    ...params,
-  });
+    $spatialFilter: `nearby(${currPosition[0]}, ${currPosition[1]}, 500)`,
+    ...remain,
+  };
+
+  const response = await getNearbyStation(query);
   return response;
 });
 

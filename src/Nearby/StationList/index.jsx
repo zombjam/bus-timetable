@@ -11,7 +11,7 @@ const StationCard = ({ station }) => {
     <Box w="full" px={3} py={2} border="1px" borderColor="primary.300" rounded="md">
       <HStack spacing={2} mb={1}>
         <Text fontWeight="700">{station?.StationName}</Text>
-        <Tag minW="52px" color="white" bg="gray.500" fontSize="xs" rounded="2xl">
+        <Tag justifyContent="center" whiteSpace="nowrap" minH="auto" py={1} color="white" bg="gray.500" fontSize="xs" rounded="2xl">
           {station?.BearingName}
         </Tag>
       </HStack>
@@ -26,6 +26,7 @@ const StationList = () => {
   const isMobile = useIsMobile();
   const isDesktop = useIsDesktop();
   const [isOpen, setIsOpen] = useState(false);
+  const position = useSelector(state => state.search.currentPosition);
   const dispatch = useDispatch();
   const stationList = useSelector(state => state.nearby.stationList);
   const vh = window.innerHeight * 0.01;
@@ -52,8 +53,8 @@ const StationList = () => {
   }, [isMobile]);
 
   useEffect(() => {
-    dispatch(fetchNearbyStationList());
-  }, [dispatch]);
+    dispatch(fetchNearbyStationList({ position }));
+  }, [dispatch, position]);
 
   return (
     <Slide

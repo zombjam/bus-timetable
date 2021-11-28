@@ -48,4 +48,7 @@ const CityObject = {
   [CityEnum.連江縣]: '連江縣',
 };
 
-export const Cities = [{ key: 'all', value: '全部縣市' }, ...Object.keys(CityObject).map(key => ({ key, value: CityObject[key] }))];
+export const Cities = [
+  // { key: 'all', value: '全部縣市' },
+  ...Object.keys(CityObject).map(key => ({ key, value: CityObject[key] })),
+];

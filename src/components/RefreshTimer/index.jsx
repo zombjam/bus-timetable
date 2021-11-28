@@ -29,7 +29,7 @@ const RefreshTimer = ({ onTimerChange }) => {
       <Text color="gray.700" fontSize="xs">
         {timeLeft}秒後更新
       </Text>
-      <Icon name="Refresh" onClick={() => clickRefresh()} />
+      <Icon name="Refresh" cursor="pointer" onClick={() => clickRefresh()} />
     </HStack>
   );
 };

@@ -9,6 +9,7 @@ import { fetchNearbyStationList } from '../store/nearby/index';
 const Nearby = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const dispatch = useDispatch();
+  const position = useSelector(state => state.search.currentPosition);
 
   const stationList = useSelector(state => state.nearby.stationList);
 
@@ -20,10 +21,11 @@ const Nearby = () => {
     keyword => {
       const params = {
         $filter: `contains(StationName/Zh_tw, '${keyword}') or Stops/any(d:contains(d/RouteName/Zh_tw, '${keyword}'))`,
+        position,
       };
       dispatch(fetchNearbyStationList(params));
     },
-    [dispatch]
+    [dispatch, position]
   );
 
   return (

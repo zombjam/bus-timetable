@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { getGeolocation } from 'store/search/index';
 
 import Home from './Home';
 import Nearby from './Nearby';
@@ -8,6 +10,30 @@ import Recommend from './Recommend';
 import Detail from './Detail';
 
 function App() {
+  const isOpenGPS = useSelector(state => state.search.isOpenGPS);
+  const dispatch = useDispatch();
+
+  const [timeLeft, setTimeLeft] = useState(300); // 5分鐘更新一次位置
+  const intervalRef = useRef();
+
+  useEffect(() => {
+    if (isOpenGPS) {
+      intervalRef.current = setInterval(() => {
+        setTimeLeft(t => t - 1);
+      }, 1000);
+      return () => {
+        return clearInterval(intervalRef.current);
+      };
+    }
+  }, [isOpenGPS]);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      dispatch(getGeolocation());
+      setTimeLeft(300);
+    }
+  }, [timeLeft, dispatch]);
+
   return (
     <HashRouter>
       <Routes>

@@ -1,17 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getBusEstimatedNearby, getNearbyStop } from '../../api/index';
 
-export const fetchNearbyStop = createAsyncThunk('home/nearby/stop', async () => {
-  const response = await getNearbyStop({
+export const fetchNearbyStop = createAsyncThunk('home/nearby/stop', async params => {
+  const { position, ...remain } = params;
+  const query = {
     $select: 'StopUID,StopID,StopName,StopPosition,Bearing,City,StopPosition',
     $top: 1,
-  });
-  return response;
+    ...remain,
+  };
+  if (!!position.length) {
+    query.$spatialFilter = `nearby(${position[0]}, ${position[1]}, 500)`;
+    const response = await getNearbyStop(query);
+    return response;
+  }
+  return [];
 });
 
 export const fetchBusEstimateNearby = createAsyncThunk('home/estimate/nearby', async params => {
-  const response = await getBusEstimatedNearby(params);
-  return response;
+  const { position, ...remain } = params;
+  const query = { ...remain };
+  if (!!position.length) {
+    query.$spatialFilter = `nearby(${position[0]}, ${position[1]}, 500)`;
+    const response = await getBusEstimatedNearby(query);
+    return response;
+  }
+  return [];
 });
 
 const initialState = {

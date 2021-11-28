@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link as ReactLink } from 'react-router-dom';
 import { Box, VStack, Text, Button, HStack, Tag, List, ListItem, Link, Divider } from '@chakra-ui/react';
@@ -6,13 +6,16 @@ import { Footer } from '../../layout';
 import { useIsMobile } from '../../hooks';
 import { Icon, BusDuration, RefreshTimer } from '../../components';
 import { fetchBusEstimateNearby, fetchNearbyStop } from 'store/home/index';
+import { openGPS, getGeolocation } from 'store/search/index';
 
 const BusRoute = () => {
+  const position = useSelector(state => state.search.currentPosition);
   const busList = useSelector(state => state.home.routeList);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fetchBusEstimateNearby());
-  }, [dispatch]);
+    dispatch(fetchBusEstimateNearby({ position }));
+  }, [dispatch, position]);
 
   return (
     <List px={6} spacing={1.5} w="full" overflow="auto" h="full">
@@ -40,14 +43,15 @@ const BusRoute = () => {
   );
 };
 
-const NearbyBusStop = () => {
+const NearbyBusStop = ({ status }) => {
   const isMobile = useIsMobile();
+  const position = useSelector(state => state.search.currentPosition);
   const nearbyStop = useSelector(state => state.home.nearbyStop);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchNearbyStop());
-  }, [dispatch]);
+    dispatch(fetchNearbyStop({ position }));
+  }, [dispatch, position]);
 
   return (
     <Box
@@ -70,16 +74,22 @@ const NearbyBusStop = () => {
       </Text>
       <Box pb={{ base: 8, md: 5 }} h="full">
         <HStack spacing={2} mb={2} px={6} justifyContent="space-between">
-          <Box>
+          <HStack spacing={1}>
             {!!nearbyStop && <Text fontWeight="700">{nearbyStop.StopName}</Text>}
             {!!nearbyStop?.Bearing && (
               <Tag color="white" bg="gray.500" fontSize="xs" rounded="2xl">
-                {nearbyStop.Bearing}
+                {nearbyStop.BearingName}
               </Tag>
             )}
-          </Box>
-          <RefreshTimer onTimerChange={() => dispatch(fetchBusEstimateNearby())} />
+          </HStack>
+          {!!position.length && <RefreshTimer onTimerChange={() => dispatch(fetchBusEstimateNearby({ position }))} />}
         </HStack>
+
+        {!position.length && (
+          <Text color="gray.600" fontSize="lg" pt={4} px={6} textAlign="center">
+            {status}
+          </Text>
+        )}
         <BusRoute />
       </Box>
 
@@ -90,7 +100,14 @@ const NearbyBusStop = () => {
 
 const GPS = () => {
   const isMobile = useIsMobile();
-  const [isOpenGPS, setOpenGPS] = useState();
+  const dispatch = useDispatch();
+  const isOpenGPS = useSelector(state => state.search.isOpenGPS);
+  const gpsStatus = useSelector(state => state.search.gpsStatus);
+
+  const setOpenGPS = useCallback(() => {
+    dispatch(openGPS(true));
+    dispatch(getGeolocation());
+  }, [dispatch]);
 
   return (
     <>
@@ -126,7 +143,7 @@ const GPS = () => {
             border="1px"
             borderColor="primary.600"
             rounded="3xl"
-            onClick={() => setOpenGPS(true)}
+            onClick={() => setOpenGPS()}
             _hover={{ bg: 'rgba(238, 234, 249, 0.5)' }}
           >
             開啟定位功能
@@ -136,7 +153,7 @@ const GPS = () => {
       {!isOpenGPS && isMobile && <Footer />}
       {isOpenGPS && (
         <>
-          <NearbyBusStop />
+          <NearbyBusStop status={gpsStatus} />
           {!isMobile && <Footer />}
         </>
       )}
