@@ -34,3 +34,7 @@ store - redux資料夾
 - [ ] Search - 搜尋頁面
 - [x] Detail - 公車資訊頁面
 - [ ] Recommend - 推薦(尚未切版)
+
+---
+
+Designer: [早餐](https://2021.thef2e.com/users/6296427084285739247?week=3&type=1)
