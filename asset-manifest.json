@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.js": "/bus-timetable/static/js/main.4b0184fa.chunk.js",
-    "main.js.map": "/bus-timetable/static/js/main.4b0184fa.chunk.js.map",
-    "runtime-main.js": "/bus-timetable/static/js/runtime-main.9431ece0.js",
-    "runtime-main.js.map": "/bus-timetable/static/js/runtime-main.9431ece0.js.map",
+    "main.js": "/bus-timetable/static/js/main.1d6c5ef1.chunk.js",
+    "main.js.map": "/bus-timetable/static/js/main.1d6c5ef1.chunk.js.map",
+    "runtime-main.js": "/bus-timetable/static/js/runtime-main.c27aad85.js",
+    "runtime-main.js.map": "/bus-timetable/static/js/runtime-main.c27aad85.js.map",
     "static/css/2.68ba508b.chunk.css": "/bus-timetable/static/css/2.68ba508b.chunk.css",
-    "static/js/2.76e3eeed.chunk.js": "/bus-timetable/static/js/2.76e3eeed.chunk.js",
-    "static/js/2.76e3eeed.chunk.js.map": "/bus-timetable/static/js/2.76e3eeed.chunk.js.map",
-    "static/js/3.baea0ee8.chunk.js": "/bus-timetable/static/js/3.baea0ee8.chunk.js",
-    "static/js/3.baea0ee8.chunk.js.map": "/bus-timetable/static/js/3.baea0ee8.chunk.js.map",
+    "static/js/2.e9dbaea4.chunk.js": "/bus-timetable/static/js/2.e9dbaea4.chunk.js",
+    "static/js/2.e9dbaea4.chunk.js.map": "/bus-timetable/static/js/2.e9dbaea4.chunk.js.map",
+    "static/js/3.2eeb9fbc.chunk.js": "/bus-timetable/static/js/3.2eeb9fbc.chunk.js",
+    "static/js/3.2eeb9fbc.chunk.js.map": "/bus-timetable/static/js/3.2eeb9fbc.chunk.js.map",
     "index.html": "/bus-timetable/index.html",
     "static/css/2.68ba508b.chunk.css.map": "/bus-timetable/static/css/2.68ba508b.chunk.css.map",
-    "static/js/2.76e3eeed.chunk.js.LICENSE.txt": "/bus-timetable/static/js/2.76e3eeed.chunk.js.LICENSE.txt",
+    "static/js/2.e9dbaea4.chunk.js.LICENSE.txt": "/bus-timetable/static/js/2.e9dbaea4.chunk.js.LICENSE.txt",
     "static/media/HeadMenu_mobile.b97f7f65.svg": "/bus-timetable/static/media/HeadMenu_mobile.b97f7f65.svg",
     "static/media/HeadMenu_open_mobile.89961ca4.svg": "/bus-timetable/static/media/HeadMenu_open_mobile.89961ca4.svg",
     "static/media/TrackingSpot.e30329b4.svg": "/bus-timetable/static/media/TrackingSpot.e30329b4.svg",
     "static/media/sprite.ccd4a5ab.svg": "/bus-timetable/static/media/sprite.ccd4a5ab.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9431ece0.js",
+    "static/js/runtime-main.c27aad85.js",
     "static/css/2.68ba508b.chunk.css",
-    "static/js/2.76e3eeed.chunk.js",
-    "static/js/main.4b0184fa.chunk.js"
+    "static/js/2.e9dbaea4.chunk.js",
+    "static/js/main.1d6c5ef1.chunk.js"
   ]
 }
