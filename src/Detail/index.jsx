@@ -12,8 +12,8 @@ import { fetchBusStops, fetchBusShapes, fetchBusEstimatedTimeList } from '../sto
 const Detail = () => {
   const { city, routeUID } = useParams();
   const dispatch = useDispatch();
-  const busShapes = useSelector(state => state.detail.busShapes);
-  const beginEndPositions = useSelector(state =>
+  const busShapes = useSelector((state) => state.detail.busShapes);
+  const beginEndPositions = useSelector((state) =>
     state.detail.busStops?.reduce((stops, station, _, arr) => {
       const target = station.Stops[station.Stops.length - 1];
       stops.push({
@@ -30,8 +30,6 @@ const Detail = () => {
       return stops;
     }, [])
   );
-
-  console.log(beginEndPositions);
 
   useEffect(() => {
     dispatch(fetchBusStops({ city, routeUID }));

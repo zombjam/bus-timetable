@@ -8,19 +8,22 @@ const initialState = {
   estimatedList: [],
 };
 
-export const fetchBusStops = createAsyncThunk('bus/fetchBusStops', async params => {
+export const fetchBusStops = createAsyncThunk('bus/fetchBusStops', async (params) => {
   const { city, routeUID } = params;
-  const response = await Promise.all([getStopOfRoute(city, routeUID), getBusRouteInfo(city, routeUID)]);
+  const query = {
+    $filter: `RouteUID eq '${routeUID}'`,
+  };
+  const response = await Promise.all([getStopOfRoute(city, routeUID), getBusRouteInfo(city, query)]);
   return response;
 });
 
-export const fetchBusShapes = createAsyncThunk('bus/fetchBusShapes', async params => {
+export const fetchBusShapes = createAsyncThunk('bus/fetchBusShapes', async (params) => {
   const { city, routeUID } = params;
   const response = await getBusRouteShape(city, routeUID);
   return response;
 });
 
-export const fetchBusEstimatedTimeList = createAsyncThunk('bus/fetchBusEstimatedTimeList', async params => {
+export const fetchBusEstimatedTimeList = createAsyncThunk('bus/fetchBusEstimatedTimeList', async (params) => {
   const { city, routeUID } = params;
   const response = await getBusEstimatedTimeOfArrivalList(city, routeUID);
   return response;
@@ -30,10 +33,10 @@ export const detailSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(fetchBusStops.fulfilled, (state, { payload }) => {
       const [busStops, busInfo] = payload;
-      state.busInfo = busInfo;
+      state.busInfo = busInfo[0];
       state.busStops = busStops;
     });
     builder.addCase(fetchBusShapes.fulfilled, (state, { payload }) => {

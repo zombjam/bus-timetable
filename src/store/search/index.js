@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import geolocation from './geolocation';
+import { getBusRouteInfo } from '../../api/index';
 
 const initialState = {
   defaultPosition: [24.122771, 120.65154],
@@ -7,6 +8,9 @@ const initialState = {
   isOpenGPS: false,
   gpsStatus: null,
   geoLoading: null,
+  cityBusList: [],
+  historyResult: [],
+  loading: null,
 };
 
 export const getGeolocation = createAsyncThunk('search/geolocation', async (isShowMsg, thunkAPI) => {
@@ -18,6 +22,18 @@ export const getGeolocation = createAsyncThunk('search/geolocation', async (isSh
   }
 });
 
+export const searchCityBusByKeyword = createAsyncThunk('search/cityBusByKeyword', async (params, thunkAPI) => {
+  const { city, keyword } = params;
+  if (!(city && keyword)) {
+    return;
+  }
+  const query = {
+    $filter: `contains(RouteName/Zh_tw, '${keyword}') or contains(DepartureStopNameZh, '${keyword}') or contains(DestinationStopNameZh, '${keyword}')`,
+  };
+  const response = await getBusRouteInfo(city, query);
+  return response;
+});
+
 export const searchSlice = createSlice({
   name: 'search',
   initialState,
@@ -25,8 +41,20 @@ export const searchSlice = createSlice({
     openGPS: (state, action) => {
       state.isOpenGPS = action.payload;
     },
+    clearSearch: (state, action) => {
+      state.cityBusList = [];
+    },
+    saveHistory: (state, { payload }) => {
+      const index = state.historyResult.findIndex((item) => item.RouteUID === payload.RouteUID);
+      if (index === -1) {
+        state.historyResult.unshift(payload);
+      }
+      if (state.historyResult.length > 6) {
+        state.historyResult.pop();
+      }
+    },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(getGeolocation.pending, (state, action) => {
       state.gpsStatus = '定位中...';
       state.geoLoading = true;
@@ -41,9 +69,19 @@ export const searchSlice = createSlice({
       state.gpsStatus = action.payload;
       state.geoLoading = false;
     });
+    builder.addCase(searchCityBusByKeyword.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(searchCityBusByKeyword.fulfilled, (state, action) => {
+      state.cityBusList = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(searchCityBusByKeyword.rejected, (state, action) => {
+      state.loading = false;
+    });
   },
 });
 
-export const { openGPS } = searchSlice.actions;
+export const { openGPS, clearSearch, saveHistory } = searchSlice.actions;
 
 export default searchSlice.reducer;

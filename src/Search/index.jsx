@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Box, InputGroup, Input, InputRightElement } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { MenuBar, Desktop, Footer } from '../layout';
 import { Dropdown, Icon, Map } from '../components';
 import SearchList from './SearchList';
+import { debounce } from 'lodash-es';
+import { useDispatch } from 'react-redux';
+import { searchCityBusByKeyword, clearSearch } from '../store/search/index';
 
 const Search = () => {
-  const isOpenGPS = useSelector(state => state.search.isOpenGPS);
+  const dispatch = useDispatch();
+  const isOpenGPS = useSelector((state) => state.search.isOpenGPS);
+  const [filter, setFilter] = useState({ city: '', keyword: '' });
+  const request = debounce((filter) => dispatch(searchCityBusByKeyword(filter)), 500);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSearch = useCallback((filter) => request(filter), []);
+
+  const onChange = (key, value) => {
+    setFilter((prevState) => ({ ...prevState, [key]: value }));
+    debouncedSearch({ ...filter, [key]: value });
+  };
+
+  const clear = () => {
+    onChange('keyword', '');
+    dispatch(clearSearch());
+  };
 
   return (
     <Box display="flex" flexDirection="column" h="full">
@@ -19,14 +38,14 @@ const Search = () => {
         w={{ base: 'full', md: 1 / 3, lg: 1 / 4 }}
         bg={{ md: 'gray.bg' }}
         shadow={{ md: 'base' }}
-        maxH={{ md: '80%' }}
+        h={{ md: '80%' }}
         overflow="hidden"
         display="flex"
         flexDirection="column"
       >
         <Box position="sticky" top="0" px={6} bg={{ base: 'gray.bg', md: 'transparent' }} zIndex={10}>
           <Box pt={{ base: 14, md: 7 }} w="80%">
-            <Dropdown />
+            <Dropdown onDropdown={(city) => onChange('city', city)} />
           </Box>
           <Box mt={3}>
             <InputGroup size="lg" shadow="base">
@@ -40,16 +59,24 @@ const Search = () => {
                   borderColor: 'primary.600',
                   boxShadow: '0 0 0 1px #7550CC',
                 }}
+                disabled={!filter.city}
+                value={filter.keyword}
+                onChange={(e) => onChange('keyword', e.target.value)}
               />
-              <InputRightElement my={1} children={<Icon name="search" cursor="pointer" size={6} />} />
+              <InputRightElement
+                cursor={!filter.city ? 'not-allowed' : 'pointer'}
+                my={1}
+                children={<Icon name={!filter.keyword ? 'search' : 'close_circle'} size={6} />}
+                onClick={() => filter.keyword && clear()}
+              />
             </InputGroup>
 
             <Box color="gray.600" fontSize="sm" pt={6} pb={4}>
-              歷史搜尋
+              {filter.keyword ? '搜尋結果' : '歷史搜尋'}
             </Box>
           </Box>
         </Box>
-        <SearchList isHistory />
+        <SearchList isHistory={!filter.keyword} />
       </Box>
       <Desktop>
         <Footer />

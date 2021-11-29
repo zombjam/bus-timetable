@@ -6,17 +6,21 @@ import 'leaflet/dist/leaflet.css';
 
 const Map = ({ zoom, center, children }) => {
   const [map, setMap] = useState(null);
-  const position = useSelector(state =>
+  const position = useSelector((state) =>
     !!state.search.currentPosition.length ? state.search.currentPosition : state.search.defaultPosition
   );
 
-  const loading = useSelector(state => state.search.geoLoading);
+  const loading = useSelector((state) => state.search.geoLoading);
 
   useEffect(() => {
-    if (map && loading === false && position.length) {
-      map.flyTo(position, zoom);
+    if (map && loading === false) {
+      if (center?.length) {
+        map.flyTo(center, zoom);
+      } else if (position.length) {
+        map.flyTo(position, zoom);
+      }
     }
-  }, [map, loading, position, zoom]);
+  }, [map, loading, center, position, zoom]);
 
   return (
     <Box w="full" h="full">

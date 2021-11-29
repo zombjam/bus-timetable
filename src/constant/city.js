@@ -23,7 +23,7 @@ export const CityEnum = Object.freeze({
   連江縣: 'LienchiangCounty',
 });
 
-const CityObject = {
+export const CityObject = {
   [CityEnum.臺北市]: '臺北市',
   [CityEnum.新北市]: '新北市',
   [CityEnum.桃園市]: '桃園市',
@@ -50,5 +50,5 @@ const CityObject = {
 
 export const Cities = [
   // { key: 'all', value: '全部縣市' },
-  ...Object.keys(CityObject).map(key => ({ key, value: CityObject[key] })),
+  ...Object.keys(CityObject).map((key) => ({ key, value: CityObject[key] })),
 ];

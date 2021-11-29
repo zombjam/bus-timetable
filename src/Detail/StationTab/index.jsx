@@ -117,16 +117,16 @@ const StationCard = ({ stop, index, isLast }) => {
 };
 
 const StationTab = ({ departureName, destinationName }) => {
-  const busStops = useSelector(state => state.detail.busStops);
-  const [departureStation, destinationStation] = useSelector(state => {
+  const busStops = useSelector((state) => state.detail.busStops);
+  const [departureStation, destinationStation] = useSelector((state) => {
     const busStops = state.detail.busStops;
     const estimatedData = state.detail.estimatedList;
-    return busStops.map(station => {
+    return busStops.map((station) => {
       if (estimatedData?.length) {
         return {
           ...station,
-          Stops: station.Stops.map(stop => {
-            const mappingEstimated = estimatedData.find(estimated => estimated.StopUID === stop.StopUID);
+          Stops: station.Stops.map((stop) => {
+            const mappingEstimated = estimatedData.find((estimated) => estimated.StopUID === stop.StopUID);
             if (!mappingEstimated) {
               return stop;
             }
@@ -155,10 +155,10 @@ const StationTab = ({ departureName, destinationName }) => {
         {busStops?.length > 1 && (
           <>
             <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
-              {destinationName}
+              往 {destinationName}
             </Tab>
             <Tab flex="1" w={1 / 2} border="0" position="relative" sx={ButtonStyles}>
-              {departureName}
+              往 {departureName}
             </Tab>
           </>
         )}

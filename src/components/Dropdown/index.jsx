@@ -2,8 +2,15 @@ import React, { useState } from 'react';
 import { Select } from '@chakra-ui/react';
 import { Cities } from '../../constant/city';
 
-const Dropdown = () => {
-  const [selected, setSelected] = useState('all');
+const Dropdown = ({ onDropdown }) => {
+  const [selected, setSelected] = useState('');
+
+  const handleChange = (e) => {
+    setSelected(e.target.value);
+    if (onDropdown) {
+      onDropdown(e.target.value);
+    }
+  };
 
   return (
     <>
@@ -14,7 +21,7 @@ const Dropdown = () => {
         iconSize={32}
         _focus={{ borderColor: 'primary.600', boxShadow: '0 0 0 1px #7550CC' }}
         border="0"
-        onChange={(e) => setSelected(e.target.value)}
+        onChange={handleChange}
         cursor="pointer"
       >
         {Cities.map((city, index) => (
