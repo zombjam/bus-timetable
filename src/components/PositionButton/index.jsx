@@ -1,28 +1,15 @@
 import React from 'react';
 import { IconButton, Tooltip, Box } from '@chakra-ui/react';
 import Icon from '../Icon';
+import { useDispatch } from 'react-redux';
+import { getGeolocation } from 'store/search/index';
 
 /**
  *
  * @param bottom = { base: 5, md: 10 }
  */
 const PositionButton = ({ top, bottom }) => {
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      // toggleModal(true, '您的瀏覽器不支援地理定位功能');
-      return;
-    }
-    // toggleModal(true, '定位中...');
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // toggleModal(false, null);
-        // setPosition([position.coords.latitude, position.coords.longitude]);
-      },
-      () => {
-        // toggleModal(true, '無法檢索您的位置。');
-      }
-    );
-  };
+  const dispatch = useDispatch();
 
   return (
     <Box
@@ -45,7 +32,7 @@ const PositionButton = ({ top, bottom }) => {
           _hover={{}}
           _active={{}}
           _focus={{}}
-          onClick={getLocation}
+          onClick={() => dispatch(getGeolocation())}
         />
       </Tooltip>
     </Box>
