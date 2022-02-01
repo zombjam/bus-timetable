@@ -1,26 +1,21 @@
 {
   "files": {
-    "main.js": "/bus-timetable/static/js/main.1d6c5ef1.chunk.js",
-    "main.js.map": "/bus-timetable/static/js/main.1d6c5ef1.chunk.js.map",
-    "runtime-main.js": "/bus-timetable/static/js/runtime-main.c27aad85.js",
-    "runtime-main.js.map": "/bus-timetable/static/js/runtime-main.c27aad85.js.map",
-    "static/css/2.68ba508b.chunk.css": "/bus-timetable/static/css/2.68ba508b.chunk.css",
-    "static/js/2.e9dbaea4.chunk.js": "/bus-timetable/static/js/2.e9dbaea4.chunk.js",
-    "static/js/2.e9dbaea4.chunk.js.map": "/bus-timetable/static/js/2.e9dbaea4.chunk.js.map",
-    "static/js/3.2eeb9fbc.chunk.js": "/bus-timetable/static/js/3.2eeb9fbc.chunk.js",
-    "static/js/3.2eeb9fbc.chunk.js.map": "/bus-timetable/static/js/3.2eeb9fbc.chunk.js.map",
+    "main.js": "/bus-timetable/static/js/main.aa37494a.chunk.js",
+    "main.js.map": "/bus-timetable/static/js/main.aa37494a.chunk.js.map",
+    "runtime~main.js": "/bus-timetable/static/js/runtime~main.dc59ff9b.js",
+    "runtime~main.js.map": "/bus-timetable/static/js/runtime~main.dc59ff9b.js.map",
+    "static/css/2.9628c809.chunk.css": "/bus-timetable/static/css/2.9628c809.chunk.css",
+    "static/js/2.0430ee6c.chunk.js": "/bus-timetable/static/js/2.0430ee6c.chunk.js",
+    "static/js/2.0430ee6c.chunk.js.map": "/bus-timetable/static/js/2.0430ee6c.chunk.js.map",
+    "static/js/3.342c207b.chunk.js": "/bus-timetable/static/js/3.342c207b.chunk.js",
+    "static/js/3.342c207b.chunk.js.map": "/bus-timetable/static/js/3.342c207b.chunk.js.map",
     "index.html": "/bus-timetable/index.html",
-    "static/css/2.68ba508b.chunk.css.map": "/bus-timetable/static/css/2.68ba508b.chunk.css.map",
-    "static/js/2.e9dbaea4.chunk.js.LICENSE.txt": "/bus-timetable/static/js/2.e9dbaea4.chunk.js.LICENSE.txt",
-    "static/media/HeadMenu_mobile.b97f7f65.svg": "/bus-timetable/static/media/HeadMenu_mobile.b97f7f65.svg",
-    "static/media/HeadMenu_open_mobile.89961ca4.svg": "/bus-timetable/static/media/HeadMenu_open_mobile.89961ca4.svg",
-    "static/media/TrackingSpot.e30329b4.svg": "/bus-timetable/static/media/TrackingSpot.e30329b4.svg",
-    "static/media/sprite.ccd4a5ab.svg": "/bus-timetable/static/media/sprite.ccd4a5ab.svg"
-  },
-  "entrypoints": [
-    "static/js/runtime-main.c27aad85.js",
-    "static/css/2.68ba508b.chunk.css",
-    "static/js/2.e9dbaea4.chunk.js",
-    "static/js/main.1d6c5ef1.chunk.js"
-  ]
+    "precache-manifest.f429b0d864073353e9647c8c48cb4806.js": "/bus-timetable/precache-manifest.f429b0d864073353e9647c8c48cb4806.js",
+    "service-worker.js": "/bus-timetable/service-worker.js",
+    "static/css/2.9628c809.chunk.css.map": "/bus-timetable/static/css/2.9628c809.chunk.css.map",
+    "static/media/HeadMenu_mobile.svg": "/bus-timetable/static/media/HeadMenu_mobile.3ef5ca2b.svg",
+    "static/media/HeadMenu_open_mobile.svg": "/bus-timetable/static/media/HeadMenu_open_mobile.1be6ff66.svg",
+    "static/media/TrackingSpot.svg": "/bus-timetable/static/media/TrackingSpot.f897212b.svg",
+    "static/media/sprite.svg": "/bus-timetable/static/media/sprite.7718e546.svg"
+  }
 }
