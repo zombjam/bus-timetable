@@ -171,8 +171,8 @@ export function getBusRouteShape(city, routeUID) {
         Coordinates: item.Geometry.match(/\(([^)]+)\)/)
           .pop()
           .split(',')
-          .map((latlng) =>
-            latlng
+          .map((latLng) =>
+            latLng
               .split(' ')
               .map((x) => parseFloat(x))
               .reverse()

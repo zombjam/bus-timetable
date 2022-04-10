@@ -23,6 +23,14 @@ const Dropdown = ({ onDropdown }) => {
         border="0"
         onChange={handleChange}
         cursor="pointer"
+        sx={{
+          ':focus': {
+            '> option:checked': {
+              backgroundColor: '#7550CC',
+              color: 'white',
+            },
+          },
+        }}
       >
         {Cities.map((city, index) => (
           <option key={city.key} value={city.key}>
