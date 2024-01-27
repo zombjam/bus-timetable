@@ -23,8 +23,8 @@ jobs:
       - name: create env file
         run: |
           touch .env
-          echo REACT_APP_ID =${{ secrets.API_APP_ID }} >> .env
-          echo REACT_APP_KEY =${{ secrets.API_APP_KEY }} >> .env
+          echo REACT_APP_CLIENT_ID =${{ secrets.TDX_CLIENT_ID }} >> .env
+          echo REACT_APP_CLIENT_SECRET =${{ secrets.TDX_CLIENT_SECRET }} >> .env
       - name: npm ci, build
         run: |
           npm ci

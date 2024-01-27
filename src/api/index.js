@@ -10,7 +10,7 @@ const initNearbyStop = {
 
 // 取得指定[位置範圍]的公車站牌資料
 export function getNearbyStop(params, position) {
-  return ajax(`/Bus/Stop/NearBy`, { ...initNearbyStop, ...params })
+  return ajax(`/advanced/v2/Bus/Stop/NearBy`, { ...initNearbyStop, ...params })
     .then((data) => {
       const result = data
         .map((item) => ({
@@ -42,7 +42,7 @@ export function getNearbyStop(params, position) {
 }
 
 export function getNearbyStation(params) {
-  return ajax(`/Bus/Station/NearBy`, { ...params }).then((data) =>
+  return ajax(`/advanced/v2/Bus/Station/NearBy`, { ...params }).then((data) =>
     data.map((item) => {
       const filterStops = item.Stops?.filter((stop, indx, arr) => arr.findIndex((s) => s.RouteUID === stop.RouteUID) === indx);
       return {
@@ -61,7 +61,7 @@ const initBusRouteNearby = {
 };
 // 取得指定[位置範圍]的公車路線資料
 export function getBusRouteByUID(params) {
-  return ajax(`/Bus/Route/NearBy`, { ...initBusRouteNearby, ...params });
+  return ajax(`/advanced/v2/Bus/Route/NearBy`, { ...initBusRouteNearby, ...params });
 }
 
 const initBusEstimatedRouteNearby = {
@@ -70,7 +70,7 @@ const initBusEstimatedRouteNearby = {
 };
 // 取得指定[位置範圍]的預測公車到站資料
 export function getBusEstimatedNearby(params) {
-  return ajax(`/Bus/EstimatedTimeOfArrival/NearBy`, { ...initBusEstimatedRouteNearby, ...params })
+  return ajax(`/advanced/v2/Bus/EstimatedTimeOfArrival/NearBy`, { ...initBusEstimatedRouteNearby, ...params })
     .then((data) =>
       data
         .filter((item, indx, arr) => arr.findIndex((i) => i.RouteUID === item.RouteUID && i.Direction === item.Direction) === indx)
@@ -120,7 +120,7 @@ const initBusRouteInfo = {
   $select: 'RouteUID,Operators,RouteName,DepartureStopNameZh,DestinationStopNameZh,TicketPriceDescriptionZh,RouteMapImageUrl,City',
 };
 export function getBusRouteInfo(city, params) {
-  const url = `/Bus/Route/${city === 'InterCity' ? city : `City/${city}`}`;
+  const url = `/basic/v2/Bus/Route/${city === 'InterCity' ? city : `City/${city}`}`;
   return ajax(url, { ...initBusRouteInfo, ...params }).then((data) =>
     data.map((item) => {
       const { DepartureStopNameZh, DestinationStopNameZh, ...model } = item;
@@ -139,7 +139,7 @@ const initStopOfRoute = {
   $select: 'RouteUID,RouteName,Direction,City,Stops',
 };
 export function getStopOfRoute(city, routeUID) {
-  const url = `/Bus/StopOfRoute/${city === 'InterCity' ? city : `City/${city}`}`;
+  const url = `/basic/v2/Bus/StopOfRoute/${city === 'InterCity' ? city : `City/${city}`}`;
   const params = {
     $filter: `RouteUID eq '${routeUID}'`,
   };
@@ -160,7 +160,7 @@ const initBusShape = {
   $select: 'RouteUID,RouteName,Direction,Geometry,EncodedPolyline',
 };
 export function getBusRouteShape(city, routeUID) {
-  const url = `/Bus/Shape/${city === 'InterCity' ? city : `City/${city}`}`;
+  const url = `/basic/v2/Bus/Shape/${city === 'InterCity' ? city : `City/${city}`}`;
   const params = {
     $filter: `RouteUID eq '${routeUID}'`,
   };
@@ -186,7 +186,7 @@ const initBusEstimatedTimeOfArrivalList = {
   $select: 'PlateNumb,StopUID,StopName,RouteUID,RouteName,Direction,EstimateTime,Estimates,StopCountDown,StopSequence,StopStatus,IsLastBus',
 };
 export function getBusEstimatedTimeOfArrivalList(city, routeUID) {
-  const url = `/Bus/EstimatedTimeOfArrival/${city === 'InterCity' ? city : `City/${city}`}`;
+  const url = `/basic/v2/Bus/EstimatedTimeOfArrival/${city === 'InterCity' ? city : `City/${city}`}`;
   const params = {
     $filter: `RouteUID eq '${routeUID}'`,
   };
